@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 
 declare global {
   // This must be a `var` and not a `let / const`
-  // eslint-disable-next-line no-var, @typescript-eslint/no-explicit-any
   var mongoose: any;
 }
 
