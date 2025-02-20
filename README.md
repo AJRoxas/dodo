@@ -41,3 +41,7 @@ https://github.com/user-attachments/assets/9ce104bb-b7f6-4531-b107-352f4b6fa91e
 
 https://github.com/user-attachments/assets/da4bd701-56f8-4a8b-9276-73988b0c20f7
 
+# Acknowledgements
+
+The dodo logo text utilizes the <a href="https://github.com/Dicotype/Funnel"> Funnel Display font</a> by NORD ID, Kristian Möller 
+
