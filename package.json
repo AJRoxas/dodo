@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
+    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.0.6",
     "@types/node": "^22.13.1",
     "@types/react": "^19.0.8",
