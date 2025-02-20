@@ -2,7 +2,7 @@
   <img src="./public/dodo-title.svg" height="100">
 </p>
 
-<p align='center'>⭐<b>Visit my project at: <a href="ajr-dodo.vercel.app">ajr-dodo.vercel.app</a></b>⭐</p>
+<p align='center'>⭐<b>Visit my project at: <a href="https://www.ajr-dodo.vercel.app">ajr-dodo.vercel.app</a></b>⭐</p>
 
 <p align='center'>👷<i>This project is still a work in progress, any details below can still change</i>👷</p>
 
