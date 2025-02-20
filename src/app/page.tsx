@@ -1,4 +1,4 @@
-import Logo from '../../public/dodo-title.svg';
+import Logo from '/dodo-title.svg';
 
 export default function Home() {
   return (
