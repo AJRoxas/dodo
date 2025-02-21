@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <img src="./public/dodo-title.svg" height="100">
+</p>
 
-## Getting Started
+<p align='center'>⭐<b>Visit my project at: <a href="https://www.ajr-dodo.vercel.app">ajr-dodo.vercel.app</a></b>⭐</p>
 
-First, run the development server:
+<p align='center'>👷<i>This project is still a work in progress, any details below can still change</i>👷</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Dodo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Thanks for visiting!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Dodo is a personalized academic platform that makes it effortless to track grades. It allows you to record assessments, monitor course progress, and set academic goals - all in one place. The reality is that sometimes thinking about your academic performance can make you feel a little stressed, especially when you can't gauge how well you're doing. But, grades can get messy and overwhelming — often requiring multiple spreadsheets, manual formulas and calculations, and endless adjustments.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+With Dodo, this process is automated for you, giving you insights into your grades and performance, all without the frustration of using spreadsheets. By visualizing your progress and setting clear goals, you can stay organized, motivated, and stress-free throughout the semester, and be in full control of your academic journey!
 
-## Learn More
+It's currently not ready yet, but I hope you try it when it is!
 
-To learn more about Next.js, take a look at the following resources:
+# Built Width
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js
+- Tailwind CSS
+- TypeScript
+- PostgreSQL
+- Prisma ORM
+- Firebase Authentication
+- Radix Primitives
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# License
 
-## Deploy on Vercel
+Distributed under the GPL-3.0 license 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Prototype
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Prototypes for this project were made on Figma
+
+## Desktop
+
+https://github.com/user-attachments/assets/9ce104bb-b7f6-4531-b107-352f4b6fa91e
+
+## Mobile
+
+https://github.com/user-attachments/assets/da4bd701-56f8-4a8b-9276-73988b0c20f7
+
+# Acknowledgements
+
+The dodo logo text utilizes the <a href="https://github.com/Dicotype/Funnel"> Funnel Display font</a> by NORD ID, Kristian Möller 
+
