@@ -24,6 +24,7 @@ It's currently not ready yet, but I hope you try it when it is!
 - PostgreSQL
 - Prisma ORM
 - Firebase Authentication
+- Radix Primitives
 
 # License
 
