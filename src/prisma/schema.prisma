@@ -1,15 +1,84 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model assessment {
+  id               Int       @id @default(autoincrement())
+  course_id        Int
+  category_id      Int?
+  name             String    @unique @db.VarChar(100)
+  points_earned    Float     @db.Real
+  potential_points Float     @db.Real
+  weight           Float     @db.Real
+  completed_date   DateTime  @db.Date
+  category         category? @relation(fields: [category_id], references: [id], onUpdate: NoAction)
+  course           course    @relation(fields: [course_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([course_id, name], map: "uq_assessment_course_name")
+}
+
+model category {
+  id         Int          @id @default(autoincrement())
+  name       String       @unique @db.VarChar(50)
+  assessment assessment[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model course {
+  id           Int          @id @default(autoincrement())
+  user_id      Int
+  course_code  String       @unique @db.VarChar(20)
+  weight       Float        @db.Real
+  goal_grade   Float        @db.Real
+  is_pass_fail Boolean
+  assessment   assessment[]
+  dodouser     dodouser     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  coursetag    coursetag[]
+}
+
+model coursetag {
+  course_id Int
+  tag_id    Int
+  course    course @relation(fields: [course_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tag       tag    @relation(fields: [tag_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([course_id, tag_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model dodouser {
+  id               Int        @id @default(autoincrement())
+  email            String     @unique @db.VarChar(255)
+  initial_credits  Float      @db.Real
+  initial_gpa      Float      @db.Real
+  required_credits Float      @db.Real
+  final_gpa_goal   Float      @db.Real
+  course           course[]
+  gpascale         gpascale[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model gpascale {
+  id       Int      @id @default(autoincrement())
+  user_id  Int
+  letter   String   @db.VarChar(3)
+  grade    Float    @db.Real
+  gpa      Float    @db.Real
+  dodouser dodouser @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([user_id, grade], map: "uq_gpa_scale_user_grade")
+  @@unique([user_id, letter], map: "uq_gpa_scale_user_letter")
+}
+
+model tag {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique @db.VarChar(50)
+  coursetag coursetag[]
 }
