@@ -1,10 +1,11 @@
-import Logo from '../../public/dodo-title.svg';
+import Logo from '@@/public/dodo-title.svg';
 
-export default function Home() {
+// Coming Soon Page
+const ComingSoon = () => {
   return (
-    <div className="flex justify-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-poppins bg-linear-to-b from-primary to-secondary text-light">
+    <div className="p-8 pb-20 sm:p-20">
       <main className="flex flex-col justify-center justify-items-center w-72 sm:w-144">
-        <Logo className="h-20 sm:h-40 w-full fill-light" />
+        <Logo className="h-20 sm:h-40 w-full fill-dark" />
         <div className="font-semibold text-6xl my-4 text-center w-full">
           Coming Soon
         </div>
@@ -15,12 +16,17 @@ export default function Home() {
           hope to share more in the near future!
           <br />
           <br />
-          You can visit the
-          <a href="https://github.com/AJRoxas/dodo"> <u>Dodo repository</u></a> to learn more about this project!
+          You can visit the{' '}
+          <a href="https://github.com/AJRoxas/dodo">
+            <u>Dodo repository</u>
+          </a>{' '}
+          to learn more about this project!
           <br />
           -AJRox-
         </div>
       </main>
     </div>
   );
-}
+};
+
+export default ComingSoon;

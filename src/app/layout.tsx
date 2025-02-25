@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import '@/styles/globals.css';
 
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
+
 const poppins = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
@@ -27,14 +31,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>{children}</body>
     </html>
   );
-}
+};
+
+export default RootLayout;

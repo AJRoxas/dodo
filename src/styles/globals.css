@@ -23,9 +23,17 @@ body {
 }
 
 svg > path {
-  fill: inherit!important;
+  fill: inherit !important;
 }
 
 .font-poppins {
-  @apply font-[family-name:var(--font-poppins)]
+  @apply font-[family-name:var(--font-poppins)];
+}
+
+.bg-gradient-primary {
+  @apply bg-linear-to-b from-primary to-secondary;
+}
+
+.text-gradient {
+  @apply text-transparent bg-linear-to-b from-primary to-secondary bg-clip-text;
 }
