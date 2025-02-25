@@ -4,8 +4,8 @@ import Link from 'next/link';
 const SignInLink = () => {
   return (
     <>
-      <Link href="/signin">Sign in</Link>
-      <Link href="/signup">Sign up</Link>
+      <Link href="/sign-in">Sign in</Link>
+      <Link href="/sign-up">Sign up</Link>
     </>
   );
 };

@@ -19,7 +19,7 @@ const Button = ({
       : size === 'md'
       ? 'h-16 rounded-lg'
       : 'h-9 rounded-sm';
-  const btnWidth = isHalved ? 'w-[150px]' : 'w-[300px]';
+  const btnWidth = isHalved ? 'w-37.5' : 'w-75';
   const style = `${btnSize} ${btnWidth} bg-primary text-light cursor-pointer`;
   return (
     <button className={style} onClick={onClick}>
