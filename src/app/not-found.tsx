@@ -5,7 +5,7 @@ import { faFaceSadTear } from '@fortawesome/free-regular-svg-icons';
 
 const NotFound = () => {
   return (
-    <div className="flex justify-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-poppins bg-linear-to-b from-primary to-secondary text-light">
+    <div className="flex justify-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-poppins bg-gradient-primary text-light">
       <main className="flex flex-col justify-center justify-items-center w-72 sm:w-144">
         <FontAwesomeIcon
           icon={faFaceSadTear}

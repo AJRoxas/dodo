@@ -22,7 +22,7 @@ interface NavBarProps {
 const NavBar = ({ isAuthenticated }: NavBarProps) => {
   return (
     <nav className="flex justify-center p-4 shadow-sm">
-      <div className="flex justify-between items-end w-full max-w-5xl">
+      <div className="flex justify-between items-end w-full max-w-7xl">
         <Link href="/" aria-label="Return back home">
           <Logo className="h-8 w-fit fill-primary self-end"></Logo>
         </Link>
