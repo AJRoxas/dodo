@@ -1,15 +1,20 @@
 'use client';
 
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 interface ButtonProps {
   size?: string;
   isHalved?: boolean;
-  children: string;
+  icon?: IconDefinition;
+  children: React.ReactNode;
   onClick: React.MouseEventHandler;
 }
 
 const Button = ({
   size = '',
   isHalved = false,
+  icon = undefined,
   children,
   onClick,
 }: ButtonProps) => {
@@ -23,7 +28,20 @@ const Button = ({
   const style = `${btnSize} ${btnWidth} bg-primary text-light cursor-pointer`;
   return (
     <button className={style} onClick={onClick}>
-      {children}
+      <div className="flex justify-center items-center gap-2">
+        {icon !== undefined ? (
+          <>
+            <FontAwesomeIcon
+              icon={icon}
+              className="h-6! fill-light"
+              fixedWidth
+            />{' '}
+          </>
+        ) : (
+          ''
+        )}
+        {children}
+      </div>
     </button>
   );
 };
