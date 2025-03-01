@@ -59,9 +59,9 @@ const upcomingFeatures = [
   },
 ];
 
-const Home = () => {
+const LandingPage = () => {
   return (
-    <main className="">
+    <main>
       <HookSection></HookSection>
       <div className="flex flex-col justify-center items-center gap-8 p-10 sm:p-20 bg-gradient-primary text-light">
         <div className="font-semibold text-3xl">What can dodo do?</div>
@@ -103,4 +103,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default LandingPage;
