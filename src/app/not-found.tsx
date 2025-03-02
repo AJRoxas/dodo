@@ -6,7 +6,7 @@ import { faFaceSadTear } from '@fortawesome/free-regular-svg-icons';
 const NotFound = () => {
   return (
     <div className="flex justify-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-poppins bg-gradient-primary text-light">
-      <main className="flex flex-col justify-center justify-items-center w-72 sm:w-144">
+      <main className="flex flex-col justify-center justify-items-center w-72 sm:w-144 motion-safe:animate-fade-up">
         <FontAwesomeIcon
           icon={faFaceSadTear}
           className="h-40! w-full fill-light"
@@ -20,7 +20,7 @@ const NotFound = () => {
         <div className="text-center w-full">
           The page probably doesn&apos;t exist. You can head back to the{' '}
           <Link href="/">
-            <u>Homepage</u>{' '}
+            <u>Homepage</u>
           </Link>
         </div>
       </main>

@@ -12,11 +12,8 @@ interface AuthenticationProps {
 
 const Authentication = ({ isSignup }: AuthenticationProps) => {
   return (
-    <div
-      className="flex flex-col justify-center items-center p-10 sm:p-20 max-w-px-300 min-h-full gap-8"
-      data-atr={isSignup}
-    >
-      <div className="flex flex-col justify-center items-center">
+    <>
+      <div className="flex flex-col justify-center items-center motion-safe:animate-fade-left">
         <Icon className="h-16 w-fit fill-primary"></Icon>
         <div className="font-semibold text-3xl text-primary">
           Sign {isSignup ? 'up' : 'in'} to dodo
@@ -28,13 +25,13 @@ const Authentication = ({ isSignup }: AuthenticationProps) => {
               sign{' '}
               {isSignup
                 ? 'in to your existing account'
-                : 'up for a new account'}
+                : 'up with a new account'}
             </u>
           </Link>{' '}
           instead
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center gap-4">
+      <div className="flex flex-col justify-center items-center gap-4 motion-safe:animate-fade-left">
         <Button size="md" icon={faGoogle} onClick={() => {}}>
           Sign {isSignup ? 'up' : 'in'} with Google
         </Button>
@@ -42,7 +39,7 @@ const Authentication = ({ isSignup }: AuthenticationProps) => {
           Sign {isSignup ? 'up' : 'in'} with GitHub
         </Button>
       </div>
-      <div className="flex flex-col justify-center items-center gap-4">
+      <div className="flex flex-col justify-center items-center gap-4 motion-safe:animate-fade-left">
         <div className="font-semibold text-center text-sm">
           Just vising? Demo the project by signing anonymously
         </div>
@@ -50,7 +47,7 @@ const Authentication = ({ isSignup }: AuthenticationProps) => {
           Enter Anonymously
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 
