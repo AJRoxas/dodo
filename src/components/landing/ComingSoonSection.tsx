@@ -1,7 +1,7 @@
 import Logo from '@@/public/dodo-title.svg';
 
 // Coming Soon Page
-const ComingSoon = () => {
+const ComingSoonSection = () => {
   return (
     <div className="p-8 pb-20 sm:p-20">
       <main className="flex flex-col justify-center justify-items-center w-72 sm:w-144">
@@ -29,4 +29,4 @@ const ComingSoon = () => {
   );
 };
 
-export default ComingSoon;
+export default ComingSoonSection;
