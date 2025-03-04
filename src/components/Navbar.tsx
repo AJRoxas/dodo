@@ -5,7 +5,6 @@ const SignInLink = () => {
   return (
     <>
       <Link href="/sign-in">Sign in</Link>
-      <Link href="/sign-up">Sign up</Link>
     </>
   );
 };
