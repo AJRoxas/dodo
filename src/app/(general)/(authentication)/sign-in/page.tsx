@@ -10,7 +10,7 @@ const SignInPage = () => {
           Sign in to dodo
         </div>
         <div className="font-semibold text-sm text-center mt-1">
-          Sign in or sign up using your Google or GitHub account
+          Don&apos;t have an account? Continue and we&apos;ll create one for you!
         </div>
       </div>
       <SignInSection />

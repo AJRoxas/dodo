@@ -1,5 +1,10 @@
+'use client';
+
+import app from '@/lib/firebase/firebase';
 import Logo from '@@/public/dodo-title.svg';
+import { deleteUser, getAuth, signOut } from 'firebase/auth';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const SignInLink = () => {
   return (
@@ -10,7 +15,33 @@ const SignInLink = () => {
 };
 
 const AuthenticatedLinks = () => {
-  return <div></div>;
+  const router = useRouter();
+
+  return (
+    <>
+      <Link
+        href="#"
+        onClick={async () => {
+          try {
+            const auth = getAuth(app);
+            const user = auth.currentUser!;
+
+            if (user.isAnonymous) {
+              await deleteUser(user);
+            }
+
+            await signOut(auth);
+            await fetch('/api/logout');
+            router.push('/sign-in');
+          } catch (error) {
+            console.log((error as Error).message);
+          }
+        }}
+      >
+        Logout
+      </Link>
+    </>
+  );
 };
 
 interface NavBarProps {

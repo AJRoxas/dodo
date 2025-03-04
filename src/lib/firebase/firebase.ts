@@ -5,3 +5,5 @@ import { firebaseClientConfig } from './config';
 // Initialize Firebase
 const app = initializeApp(firebaseClientConfig);
 
+export default app;
+
