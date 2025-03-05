@@ -33,7 +33,7 @@ model category {
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model course {
   id           Int          @id @default(autoincrement())
-  user_id      Int
+  user_id      String       @db.VarChar(64)
   course_code  String       @unique @db.VarChar(20)
   weight       Float        @db.Real
   goal_grade   Float        @db.Real
@@ -54,12 +54,13 @@ model coursetag {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model dodouser {
-  id               Int        @id @default(autoincrement())
+  id               String     @id @db.VarChar(64)
   email            String     @unique @db.VarChar(255)
   initial_credits  Float      @db.Real
   initial_gpa      Float      @db.Real
   required_credits Float      @db.Real
   final_gpa_goal   Float      @db.Real
+  is_anon          Boolean    @default(false)
   course           course[]
   gpascale         gpascale[]
 }
@@ -67,7 +68,7 @@ model dodouser {
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model gpascale {
   id       Int      @id @default(autoincrement())
-  user_id  Int
+  user_id  String   @db.VarChar(64)
   letter   String   @db.VarChar(3)
   grade    Float    @db.Real
   gpa      Float    @db.Real
