@@ -1,5 +1,5 @@
 // Firebase server configuration
-const firebaseServerConfig = {
+export const firebaseServerConfig = {
   cookieName: process.env.AUTH_COOKIE_NAME!,
   cookieSignatureKeys: [
     process.env.AUTH_COOKIE_SIGNATURE_KEY_CURRENT!,
@@ -20,7 +20,7 @@ const firebaseServerConfig = {
 };
 
 // Firebase client configuration
-const firebaseClientConfig = {
+export const firebaseClientConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!,
@@ -29,5 +29,3 @@ const firebaseClientConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID!,
 };
-
-export { firebaseServerConfig, firebaseClientConfig };

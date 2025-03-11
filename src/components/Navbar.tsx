@@ -1,48 +1,9 @@
 'use client';
 
-import app from '@/lib/firebase/firebase';
+import { signOutUser } from '@/lib/auth';
 import Logo from '@@/public/dodo-title.svg';
-import { deleteUser, getAuth, signOut } from 'firebase/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
-const SignInLink = () => {
-  return (
-    <>
-      <Link href="/sign-in">Sign in</Link>
-    </>
-  );
-};
-
-const AuthenticatedLinks = () => {
-  const router = useRouter();
-
-  return (
-    <>
-      <Link
-        href="#"
-        onClick={async () => {
-          try {
-            const auth = getAuth(app);
-            const user = auth.currentUser!;
-
-            if (user.isAnonymous) {
-              await deleteUser(user);
-            }
-
-            await signOut(auth);
-            await fetch('/api/logout');
-            router.push('/sign-in');
-          } catch (error) {
-            console.log((error as Error).message);
-          }
-        }}
-      >
-        Logout
-      </Link>
-    </>
-  );
-};
 
 interface NavBarProps {
   // Changes the appearance of navigation if the user is authenticated
@@ -50,6 +11,31 @@ interface NavBarProps {
 }
 
 const NavBar = ({ isAuthenticated }: NavBarProps) => {
+  const router = useRouter();
+
+  const SignInLink = () => {
+    return (
+      <>
+        <Link href="/sign-in">Sign in</Link>
+      </>
+    );
+  };
+
+  const AuthenticatedLinks = () => {
+    return (
+      <>
+        <Link
+          href="#"
+          onClick={async () => {
+            if (await signOutUser()) router.push('/sign-in');
+          }}
+        >
+          Sign out
+        </Link>
+      </>
+    );
+  };
+
   return (
     <nav className="flex justify-center p-4 shadow-sm">
       <div className="flex justify-between items-end w-full max-w-7xl">

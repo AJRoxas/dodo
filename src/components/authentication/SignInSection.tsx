@@ -1,72 +1,30 @@
 'use client';
 
 import Button from '@/components/Button';
-import app from '@/lib/firebase/firebase';
 import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faMask } from '@fortawesome/free-solid-svg-icons';
 import {
-  AuthProvider,
-  getAuth,
-  signInAnonymously,
-  signInWithPopup,
-} from 'firebase/auth';
+  signInUserAnonymously,
+  signInUserUsingGitHub,
+  signInUserUsingGoogle,
+} from '@/lib/auth';
 import { useRouter } from 'next/navigation';
-import { GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
 
 const SignInSection = () => {
   const router = useRouter();
-  const googleProvider = new GoogleAuthProvider();
-  const gitHubProvider = new GithubAuthProvider();
-  gitHubProvider.setCustomParameters({
-    allow_signup: 'false',
-  });
 
-  const redirectToDashboard = () => {
+  const navigateToDashboard = () => {
     router.push('/getting-started');
   };
-
-  const handleSSO = async (provider: AuthProvider) => {
-    try {
-      const credentials = await signInWithPopup(getAuth(app), provider);
-      const idToken = await credentials.user.getIdToken();
-
-      await fetch('/api/login', {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      });
-
-      redirectToDashboard();
-    } catch (error) {
-      console.log((error as Error).message);
-    }
-  };
-
-  const handleAnonymousSignIn = async () => {
-    try {
-      const credentials = await signInAnonymously(getAuth(app));
-      const idToken = await credentials.user.getIdToken();
-
-      await fetch('/api/login', {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      });
-
-      redirectToDashboard();
-    } catch (error) {
-      console.log((error as Error).message);
-    }
-  };
-
+  
   return (
     <>
       <div className="flex flex-col justify-center items-center gap-4 motion-safe:animate-fade-left">
         <Button
           size="md"
           icon={faGoogle}
-          onClick={() => {
-            handleSSO(googleProvider);
+          onClick={async () => {
+            if (await signInUserUsingGoogle()) navigateToDashboard();
           }}
         >
           Continue with Google
@@ -74,8 +32,8 @@ const SignInSection = () => {
         <Button
           size="md"
           icon={faGithub}
-          onClick={() => {
-            handleSSO(gitHubProvider);
+          onClick={async () => {
+            if (await signInUserUsingGitHub()) navigateToDashboard();
           }}
         >
           Continue with GitHub
@@ -88,8 +46,8 @@ const SignInSection = () => {
         <Button
           size="md"
           icon={faMask}
-          onClick={() => {
-            handleAnonymousSignIn();
+          onClick={async () => {
+            if (await signInUserAnonymously()) navigateToDashboard();
           }}
         >
           Enter Anonymously
