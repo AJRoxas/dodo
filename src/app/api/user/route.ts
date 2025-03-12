@@ -15,10 +15,7 @@ export async function POST(request: NextRequest) {
       is_anon: body.is_anon,
     });
 
-    console.log(user)
-
     if (user.error !== undefined) {
-      console.log(user.error)
       return NextResponse.json(user, { status: 208 })
     }
 
