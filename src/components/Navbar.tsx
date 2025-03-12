@@ -1,6 +1,6 @@
 'use client';
 
-import { signOutUser } from '@/lib/auth';
+import { signOutUser } from '@/lib/auth/clientAuth';
 import Logo from '@@/public/dodo-title.svg';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

@@ -73,7 +73,7 @@ model tags {
 
 model users {
   id           String        @id @db.VarChar(28)
-  email        String        @unique @db.VarChar(255)
+  email        String?       @unique @db.VarChar(255)
   is_anon      Boolean       @default(false)
   courses      courses[]
   gpascales    gpascales[]

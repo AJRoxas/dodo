@@ -7,24 +7,26 @@ import {
   signInUserAnonymously,
   signInUserUsingGitHub,
   signInUserUsingGoogle,
-} from '@/lib/auth';
+} from '@/lib/auth/clientAuth';
 import { useRouter } from 'next/navigation';
 
 const SignInSection = () => {
   const router = useRouter();
 
-  const navigateToDashboard = () => {
-    router.push('/getting-started');
+  const signIn = async (signInFn: () => Promise<boolean>) => {
+    if (await signInFn()) {
+      router.push('/getting-started');
+    }
   };
-  
+
   return (
     <>
       <div className="flex flex-col justify-center items-center gap-4 motion-safe:animate-fade-left">
         <Button
           size="md"
           icon={faGoogle}
-          onClick={async () => {
-            if (await signInUserUsingGoogle()) navigateToDashboard();
+          onClick={() => {
+            signIn(signInUserUsingGoogle);
           }}
         >
           Continue with Google
@@ -32,8 +34,8 @@ const SignInSection = () => {
         <Button
           size="md"
           icon={faGithub}
-          onClick={async () => {
-            if (await signInUserUsingGitHub()) navigateToDashboard();
+          onClick={() => {
+            signIn(signInUserUsingGitHub);
           }}
         >
           Continue with GitHub
@@ -46,8 +48,8 @@ const SignInSection = () => {
         <Button
           size="md"
           icon={faMask}
-          onClick={async () => {
-            if (await signInUserAnonymously()) navigateToDashboard();
+          onClick={() => {
+            signIn(signInUserAnonymously);
           }}
         >
           Enter Anonymously
