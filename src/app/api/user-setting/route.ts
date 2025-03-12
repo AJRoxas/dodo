@@ -1,9 +1,9 @@
-import { deleteUser } from '@/lib/prisma/queries/users';
+import { getUserSetting } from '@/lib/prisma/queries/userSettings';
 import { validateToken } from '@/lib/auth/serverAuth';
 import { apiTryCatch } from '@/lib/utils/tryCatchWrappers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function DELETE(
+export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -12,13 +12,8 @@ export async function DELETE(
     if (unAuthenticated) return unAuthenticated;
 
     const { id } = await params;
-    const user = await deleteUser(id);
+    const user = await getUserSetting(id);
 
-    if (user.error !== undefined) {
-      console.log(user.error);
-      NextResponse.json(user, { status: 208 });
-    }
-
-    return NextResponse.json({ status: 204 });
+    return NextResponse.json(user, { status: 200 });
   });
 }

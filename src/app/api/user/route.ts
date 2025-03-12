@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   return await apiTryCatch(async () => {
-    const unAuthenticated = await validateToken(request);
+    const unAuthenticated = await validateToken(request.cookies);
     if (unAuthenticated) return unAuthenticated;
 
     const body = await request.json();

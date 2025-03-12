@@ -39,11 +39,11 @@ export const updateUser = (user: users) => {
 
 export const deleteUser = (uid: string) => {
   return prismaTryCatch(async () => {
-    const user = await prisma.users.delete({
+    const deletedUser = await prisma.users.delete({
       where: {
         id: uid,
       },
     });
-    return user;
+    return deletedUser;
   });
 };
