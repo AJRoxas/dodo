@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tailwindcss-animated";
+@import 'tailwindcss-animated';
 
 @theme {
   --color-light: #ffffff;
@@ -17,24 +17,54 @@
   }
 } */
 
-body {
-  color: var(--color-foreground);
-  background: var(--color-background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    @apply text-dark bg-light font-[family-name:var(--font-poppins)];
+  }
+
+  svg > path {
+    @apply !fill-inherit;
+  }
 }
 
-svg > path {
-  fill: inherit !important;
+@layer components {
+  .container-col {
+    @apply flex flex-col justify-center items-center gap-8 p-10 sm:p-20 w-full min-h-full;
+  }
 }
 
-.font-poppins {
-  @apply font-[family-name:var(--font-poppins)];
-}
-
-.bg-gradient-primary {
+@utility bg-gradient-primary {
   @apply bg-linear-to-b from-primary to-secondary;
 }
 
-.text-gradient {
+@utility font-poppins {
+  font-family: var(--font-poppins);
+}
+
+@utility h-px-* {
+  height: --value(integer)px;
+}
+
+@utility max-h-px-* {
+  max-height: --value(integer)px;
+}
+
+@utility min-h-px-* {
+  min-height: --value(integer)px;
+}
+
+@utility max-w-px-* {
+  max-width: --value(integer)px;
+}
+
+@utility min-w-px-* {
+  min-width: --value(integer)px;
+}
+
+@utility text-gradient {
   @apply text-transparent bg-linear-to-b from-primary to-secondary bg-clip-text;
+}
+
+@utility w-px-* {
+  width: --value(integer)px;
 }
