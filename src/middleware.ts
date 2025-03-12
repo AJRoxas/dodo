@@ -8,8 +8,11 @@ import {
   firebaseServerConfig,
   firebaseClientConfig,
 } from '@/lib/firebase/config';
+import { getUserSetting } from './lib/prisma/queries/userSettings';
 
 const PUBLIC_PATHS = ['/', '/sign-in'];
+const ONBOARDED_PATHS = ['/dashboard'];
+const ONBOARDING_PATHS = ['/getting-started'];
 
 export async function middleware(request: NextRequest) {
   return authMiddleware(request, {
@@ -23,9 +26,26 @@ export async function middleware(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleValidToken: async ({ token, decodedToken }, headers) => {
       if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
-        return redirectToPath(request, '/getting-started', {
+        const userSetting = await getUserSetting(decodedToken.uid)
+        const location = userSetting !== null ? 
+        '/dashboard' : '/getting-started';
+        return redirectToPath(request, location, {
           shouldClearSearchParams: true,
         });
+      } else if (ONBOARDED_PATHS.includes(request.nextUrl.pathname)) {
+        const userSetting = await getUserSetting(decodedToken.uid)
+        if (userSetting === null) {
+          return redirectToPath(request, '/getting-started', {
+            shouldClearSearchParams: true,
+          });
+        }
+      } else if (ONBOARDING_PATHS.includes(request.nextUrl.pathname)) {
+        const userSetting = await getUserSetting(decodedToken.uid)
+        if (userSetting !== null) {
+          return redirectToPath(request, '/dashboard', {
+            shouldClearSearchParams: true,
+          });
+        }
       }
 
       return NextResponse.next({

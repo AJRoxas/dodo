@@ -1,19 +1,11 @@
-'use server'; 
+'use server';
 
-import { NextRequest, NextResponse } from 'next/server';
-import { getTokens } from 'next-firebase-auth-edge';
-import {
-  firebaseClientConfig,
-  firebaseServerConfig,
-} from '@/lib/firebase/config';
+import { NextResponse } from 'next/server';
+import { RequestCookies } from 'next/dist/compiled/@edge-runtime/cookies';
+import { retrieveTokens } from './token';
 
-export const validateToken = async (request: NextRequest) => {
-  const tokens = await getTokens(request.cookies, {
-    apiKey: firebaseClientConfig.apiKey,
-    cookieName: firebaseServerConfig.cookieName,
-    cookieSignatureKeys: firebaseServerConfig.cookieSignatureKeys,
-    serviceAccount: firebaseServerConfig.serviceAccount,
-  });
+export const validateToken = async (cookies: RequestCookies) => {
+  const tokens = await retrieveTokens(cookies);
 
   if (tokens) {
     return null;

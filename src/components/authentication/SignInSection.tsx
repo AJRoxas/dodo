@@ -15,7 +15,7 @@ const SignInSection = () => {
 
   const signIn = async (signInFn: () => Promise<boolean>) => {
     if (await signInFn()) {
-      router.push('/getting-started');
+      router.push('/dashboard');
     }
   };
 
