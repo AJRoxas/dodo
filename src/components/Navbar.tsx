@@ -1,18 +1,9 @@
+'use client';
+
+import { signOutUser } from '@/lib/auth/clientAuth';
 import Logo from '@@/public/dodo-title.svg';
 import Link from 'next/link';
-
-const SignInLink = () => {
-  return (
-    <>
-      <Link href="/sign-in">Sign in</Link>
-      <Link href="/sign-up">Sign up</Link>
-    </>
-  );
-};
-
-const AuthenticatedLinks = () => {
-  return <div></div>;
-};
+import { useRouter } from 'next/navigation';
 
 interface NavBarProps {
   // Changes the appearance of navigation if the user is authenticated
@@ -20,6 +11,31 @@ interface NavBarProps {
 }
 
 const NavBar = ({ isAuthenticated }: NavBarProps) => {
+  const router = useRouter();
+
+  const SignInLink = () => {
+    return (
+      <>
+        <Link href="/sign-in">Sign in</Link>
+      </>
+    );
+  };
+
+  const AuthenticatedLinks = () => {
+    return (
+      <>
+        <Link
+          href="#"
+          onClick={async () => {
+            if (await signOutUser()) router.push('/sign-in');
+          }}
+        >
+          Sign out
+        </Link>
+      </>
+    );
+  };
+
   return (
     <nav className="flex justify-center p-4 shadow-sm">
       <div className="flex justify-between items-end w-full max-w-7xl">
