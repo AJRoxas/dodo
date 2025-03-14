@@ -1,5 +1,3 @@
-'use-client';
-
 import { auth } from '@/lib/firebase/firebase';
 import {
   AuthProvider,

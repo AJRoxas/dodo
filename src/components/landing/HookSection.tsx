@@ -7,7 +7,7 @@ const HookSection = () => {
   const router = useRouter();
 
   return (
-    <div className="container-col gap-2 motion-safe:animate-fade-up">
+    <div className="gap-2 container-col motion-safe:animate-fade-up">
       <div className="font-semibold text-4xl sm:text-6xl">Your Grades</div>
       <div className="font-semibold text-4xl sm:text-6xl text-gradient">
         Simplified

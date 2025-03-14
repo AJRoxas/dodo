@@ -6,7 +6,7 @@ const LandingPage = () => {
     <main>
       <HookSection />
       <FeaturesSection />
-      <div className="container-col gap-1">
+      <div className="gap-1 container-col">
         <div className="max-w-xs font-semibold text-3xl text-center text-primary">
           Want to know more about dodo?
         </div>

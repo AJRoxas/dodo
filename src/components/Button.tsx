@@ -8,7 +8,7 @@ interface ButtonProps {
   icon?: IconDefinition;
   isHalved?: boolean;
   isSubmit?: boolean;
-  onClick: React.MouseEventHandler;
+  onClick?: React.MouseEventHandler;
   size?: string;
 }
 
@@ -16,7 +16,7 @@ const Button = ({
   children,
   icon = undefined,
   isHalved = false,
-  onClick,
+  onClick = undefined,
   size = '',
   isSubmit = false,
 }: ButtonProps) => {
