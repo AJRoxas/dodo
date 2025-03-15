@@ -1,13 +1,12 @@
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
-import FormInput from '@/components/forms/FormInput';
+import { FormEmail } from '@/components/forms/FormInput';
 
 const GettingStartedPage = () => {
   const formSubmission = async (formData: FormData) => {
     'use server';
 
     console.log(formData);
-    
   };
 
   return (
@@ -21,7 +20,13 @@ const GettingStartedPage = () => {
             </div>
           </div>
 
-          <FormInput></FormInput>
+          <FormEmail
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="dodo@ajr.dodo.ca"
+            required={false}
+          ></FormEmail>
 
           <Form.Submit asChild>
             <Button>Submit</Button>
