@@ -1,82 +1,96 @@
+'use client';
+
 import { InputValidation } from '@@/types';
 import { Form } from 'radix-ui';
-import { HTMLInputTypeAttribute } from 'react';
+import { useState } from 'react';
 
 interface InputProps {
   name: string;
   label: string;
-  type: HTMLInputTypeAttribute;
   placeholder?: string;
   required: boolean;
+  value?: string | number;
+  type: 'email' | 'number';
+
+  // For numbers
+  min?: number;
+  max?: number;
+  step?: string;
 }
 
-interface FormInputProps extends InputProps {
-  validations: InputValidation[];
-}
-
-const FormInput = ({
+const FormInputWrapper = ({
   name,
   label,
-  type,
-  placeholder = undefined,
-  required = false,
+  children,
   validations = [],
-}: FormInputProps) => {
-  return (
-    <Form.Field className="w-px-300" name={name}>
-      <div className="flex items-baseline justify-between mb-1">
-        <Form.Label className="text-sm font-semibold">{label}</Form.Label>
-        {validations.map(({ validation, message }) => {
-          return (
-            <Form.Message
-              key={validation}
-              className="form-message"
-              match={validation}
-            >
-              {message}
-            </Form.Message>
-          );
-        })}
-      </div>
-      <Form.Control asChild>
-        <input
-          className="form-input"
-          type={type}
-          placeholder={placeholder}
-          required={required}
-        />
-      </Form.Control>
-    </Form.Field>
-  );
-};
+}: {
+  name: string;
+  label: string;
+  children: React.ReactNode;
+  validations: InputValidation[];
+}) => (
+  <Form.Field className="w-px-300" name={name}>
+    <div className="flex items-baseline justify-between mb-1">
+      <Form.Label className="text-sm font-semibold">{label}</Form.Label>
+      {validations.map(({ validation, message }) => (
+        <Form.Message key={validation} className="form-message" match={validation}>
+          {message}
+        </Form.Message>
+      ))}
+    </div>
+    <Form.Control asChild>{children}</Form.Control>
+  </Form.Field>
+);
 
-export const FormEmail = ({
+export const FormInput = ({
   name,
   label,
-  type,
-  placeholder = undefined,
+  placeholder,
   required = false,
+  value,
+  type,
+  min,
+  max,
+  step = 'any',
 }: InputProps) => {
-  const validations: InputValidation[] = [
-    {
-      validation: 'valueMissing',
-      message: 'Please enter your email',
-    },
-    {
-      validation: 'typeMismatch',
-      message: 'Please provide a valid email',
-    },
-  ];
+  const [val, setVal] = useState(value ?? '');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVal(event.target.value);
+  };
+
+  const validations: InputValidation[] = [];
+
+  if (type === 'email') {
+    validations.push(
+      { validation: 'valueMissing', message: 'Please enter your email' },
+      { validation: 'typeMismatch', message: 'Please provide a valid email' }
+    );
+  } else if (type === 'number') {
+    validations.push(
+      { validation: 'valueMissing', message: 'Please enter a number' }
+    )
+    if (min !== undefined) {
+      validations.push({ validation: 'rangeUnderflow', message: 'Please enter a higher number' });
+    }
+    if (max !== undefined) {
+      validations.push({ validation: 'rangeOverflow', message: 'Please enter a lower number' });
+    }
+  }
+
   return (
-    <FormInput
-      name={name}
-      label={label}
-      type={type}
-      placeholder={placeholder}
-      required={required}
-      validations={validations}
-    ></FormInput>
+    <FormInputWrapper name={name} label={label} validations={validations}>
+      <input
+        className="form-input"
+        type={type}
+        placeholder={placeholder}
+        required={required}
+        value={val}
+        min={min}
+        max={max}
+        step={step}
+        onChange={handleChange}
+      />
+    </FormInputWrapper>
   );
 };
-
-export default FormInput;

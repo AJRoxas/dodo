@@ -36,7 +36,7 @@
   }
 
   .form-message {
-    @apply text-error text-sm font-semibold;
+    @apply text-error text-xs font-semibold;
   }
 
   .form-input {
