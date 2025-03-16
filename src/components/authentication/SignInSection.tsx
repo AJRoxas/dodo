@@ -27,7 +27,7 @@ const SignInSection = () => {
       <div className="flex flex-col justify-center items-center motion-safe:animate-fade-left">
         <Icon
           className={`h-16 w-fit fill-primary ${
-            signingIn ? 'motion-safe:animate-wiggle-more animate-infinite' : undefined
+            signingIn ? 'motion-safe:animate-infinite motion-safe:animate-wiggle-more' : undefined
           }`}
         ></Icon>
         <div className="font-semibold text-3xl text-primary">
