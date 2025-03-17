@@ -23,7 +23,7 @@ const SignInSection = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col w-px-300 gap-8">
       <div className="flex flex-col justify-center items-center motion-safe:animate-fade-left">
         <Icon
           className={`h-16 w-fit fill-primary ${
@@ -75,7 +75,7 @@ const SignInSection = () => {
           Enter Anonymously
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

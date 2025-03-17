@@ -63,18 +63,18 @@ export const FormInput = ({
 
   if (type === 'email') {
     validations.push(
-      { validation: 'valueMissing', message: 'Please enter your email' },
-      { validation: 'typeMismatch', message: 'Please provide a valid email' }
+      { validation: 'valueMissing', message: 'Enter your email' },
+      { validation: 'typeMismatch', message: 'Provide a valid email' }
     );
   } else if (type === 'number') {
     validations.push(
-      { validation: 'valueMissing', message: 'Please enter a number' }
+      { validation: 'valueMissing', message: 'Enter a number' }
     )
     if (min !== undefined) {
-      validations.push({ validation: 'rangeUnderflow', message: 'Please enter a higher number' });
+      validations.push({ validation: 'rangeUnderflow', message: 'Provide a higher number' });
     }
     if (max !== undefined) {
-      validations.push({ validation: 'rangeOverflow', message: 'Please enter a lower number' });
+      validations.push({ validation: 'rangeOverflow', message: 'Provide a lower number' });
     }
   }
 
