@@ -3,6 +3,7 @@
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
 import { FormInput } from '@/components/forms/FormInput';
+import GpaScales from '@/components/forms/GpaScales';
 
 const GettingStartedForm = () => {
   const formSubmission = async (formData: FormData) => {
@@ -10,10 +11,10 @@ const GettingStartedForm = () => {
 
     console.log(formData);
   };
-  
+
   return (
     <Form.Root action={formSubmission}>
-      <div className="flex flex-col gap-8 w-px-300 sm:w-px-640 motion-safe:animate-fade-left">
+      <div className="flex flex-col gap-8 w-75 sm:w-160 motion-safe:animate-fade-left">
         <div>
           <div className="text-3xl font-semibold">Getting Started</div>
           <div className="text-sm">
@@ -37,7 +38,6 @@ const GettingStartedForm = () => {
               name="final_gpa_goal"
               label="Final GPA Goal"
               min={0}
-              max={4}
               required={true}
               type="number"
               placeholder="4.0"
@@ -67,7 +67,6 @@ const GettingStartedForm = () => {
               name="initial_gpa"
               label="Initial GPA"
               min={0}
-              max={4}
               required={true}
               type="number"
               placeholder="4.0"
@@ -75,6 +74,8 @@ const GettingStartedForm = () => {
             ></FormInput>
           </div>
         </div>
+
+        <GpaScales/>
 
         <Form.Submit asChild>
           <Button>Submit</Button>

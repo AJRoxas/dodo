@@ -16,6 +16,22 @@ interface InputProps {
   min?: number;
   max?: number;
   step?: string;
+
+  // Formatting
+  hasValidation?: boolean;
+  hasMessages?: boolean;
+  hasLabel?: boolean;
+  customStyles?: string;
+  customOnChange?: React.ChangeEventHandler<HTMLElement>;
+}
+
+interface FormInputWrapperProps {
+  name: string;
+  label: string;
+  children: React.ReactNode;
+  validations: InputValidation[];
+
+  hasLabel: boolean;
 }
 
 const FormInputWrapper = ({
@@ -23,17 +39,19 @@ const FormInputWrapper = ({
   label,
   children,
   validations = [],
-}: {
-  name: string;
-  label: string;
-  children: React.ReactNode;
-  validations: InputValidation[];
-}) => (
-  <Form.Field className="w-px-300" name={name}>
-    <div className="flex items-baseline justify-between mb-1">
-      <Form.Label className="text-sm font-semibold">{label}</Form.Label>
+  hasLabel,
+}: FormInputWrapperProps) => (
+  <Form.Field name={name}>
+    <div className="flex items-baseline justify-between">
+      {hasLabel ? (
+        <Form.Label className="text-sm font-semibold">{label}</Form.Label>
+      ) : undefined}
       {validations.map(({ validation, message }) => (
-        <Form.Message key={validation} className="form-message" match={validation}>
+        <Form.Message
+          key={validation}
+          className="form-message"
+          match={validation}
+        >
           {message}
         </Form.Message>
       ))}
@@ -52,6 +70,11 @@ export const FormInput = ({
   min,
   max,
   step = 'any',
+  hasValidation = true,
+  hasMessages = true,
+  hasLabel = true,
+  customStyles = '',
+  customOnChange = undefined,
 }: InputProps) => {
   const [val, setVal] = useState(value ?? '');
 
@@ -61,27 +84,47 @@ export const FormInput = ({
 
   const validations: InputValidation[] = [];
 
-  if (type === 'email') {
-    validations.push(
-      { validation: 'valueMissing', message: 'Enter your email' },
-      { validation: 'typeMismatch', message: 'Provide a valid email' }
-    );
-  } else if (type === 'number') {
-    validations.push(
-      { validation: 'valueMissing', message: 'Enter a number' }
-    )
-    if (min !== undefined) {
-      validations.push({ validation: 'rangeUnderflow', message: 'Provide a higher number' });
-    }
-    if (max !== undefined) {
-      validations.push({ validation: 'rangeOverflow', message: 'Provide a lower number' });
+  if (hasValidation) {
+    if (type === 'email') {
+      validations.push(
+        {
+          validation: 'valueMissing',
+          message: hasMessages ? 'Enter your email' : '',
+        },
+        {
+          validation: 'typeMismatch',
+          message: hasMessages ? 'Provide a valid email' : '',
+        }
+      );
+    } else if (type === 'number') {
+      validations.push({
+        validation: 'valueMissing',
+        message: hasMessages ? 'Enter a number' : '',
+      });
+      if (min !== undefined) {
+        validations.push({
+          validation: 'rangeUnderflow',
+          message: hasMessages ? 'Provide a higher number' : '',
+        });
+      }
+      if (max !== undefined) {
+        validations.push({
+          validation: 'rangeOverflow',
+          message: hasMessages ? 'Provide a lower number' : '',
+        });
+      }
     }
   }
 
   return (
-    <FormInputWrapper name={name} label={label} validations={validations}>
+    <FormInputWrapper
+      name={name}
+      label={label}
+      validations={validations}
+      hasLabel={hasLabel}
+    >
       <input
-        className="form-input"
+        className={`form-input ${customStyles}`}
         type={type}
         placeholder={placeholder}
         required={required}
@@ -89,7 +132,14 @@ export const FormInput = ({
         min={min}
         max={max}
         step={step}
-        onChange={handleChange}
+        onChange={
+          customOnChange === undefined
+            ? handleChange
+            : (e) => {
+                handleChange(e);
+                customOnChange(e);
+              }
+        }
       />
     </FormInputWrapper>
   );

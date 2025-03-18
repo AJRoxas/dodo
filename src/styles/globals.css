@@ -40,7 +40,11 @@
   }
 
   .form-input {
-    @apply w-px-300 px-2 py-1.5 ring-1 ring-primary rounded-sm hover:ring-2 focus:ring-2 outline-0;
+    @apply w-75 px-2 py-1.5 ring-1 ring-primary rounded-sm hover:ring-2 focus:ring-2 outline-0;
+  }
+
+  .gpa-cell {
+    @apply min-w-20 max-w-48 w-full;
   }
 }
 

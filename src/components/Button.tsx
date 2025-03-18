@@ -4,7 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface ButtonProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   icon?: IconDefinition;
   isHalved?: boolean;
   isSubmit?: boolean;
@@ -13,7 +13,7 @@ interface ButtonProps {
 }
 
 const Button = ({
-  children,
+  children = undefined,
   icon = undefined,
   isHalved = false,
   onClick = undefined,
@@ -26,8 +26,10 @@ const Button = ({
       : size === 'md'
       ? 'h-16 rounded-lg'
       : 'h-9 rounded-sm';
-  const btnWidth = isHalved ? 'w-37.5' : 'w-75';
-  const style = `${btnSize} ${btnWidth} bg-primary text-light cursor-pointer`;
+  const color =
+    size === 'fas' ? 'bg-transparent text-dark' : 'bg-primary text-light';
+  const btnWidth = size === 'fas' ? 'min-w-6' : isHalved ? 'w-37.5' : 'w-75';
+  const style = `${btnSize} ${btnWidth} ${color} cursor-pointer`;
   return (
     <button
       type={isSubmit ? 'submit' : undefined}
@@ -39,7 +41,7 @@ const Button = ({
           <>
             <FontAwesomeIcon
               icon={icon}
-              className="h-6! fill-light"
+              className={size == 'fas' ? 'w-6! fill-dark' : 'h-6! fill-light'}
               fixedWidth
             />{' '}
           </>
