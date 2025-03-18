@@ -28,10 +28,11 @@ const GpaGrade = ({
       <FormInput
         name={`${id}-letter`}
         value={letter}
+        maxLen={3}
         label=""
         required={true}
-        type="email"
-        placeholder="4.0"
+        type="text"
+        placeholder="A+"
         hasMessages={false}
         hasLabel={false}
         customStyles="gpa-cell"

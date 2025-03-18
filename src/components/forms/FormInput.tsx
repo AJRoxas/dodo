@@ -10,7 +10,11 @@ interface InputProps {
   placeholder?: string;
   required: boolean;
   value?: string | number;
-  type: 'email' | 'number';
+  type: 'email' | 'number' | 'text';
+
+  // For length
+  minLen?: number;
+  maxLen?: number;
 
   // For numbers
   min?: number;
@@ -67,6 +71,8 @@ export const FormInput = ({
   required = false,
   value,
   type,
+  minLen,
+  maxLen,
   min,
   max,
   step = 'any',
@@ -79,6 +85,7 @@ export const FormInput = ({
   const [val, setVal] = useState(value ?? '');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
     setVal(event.target.value);
   };
 
@@ -113,6 +120,19 @@ export const FormInput = ({
           message: hasMessages ? 'Provide a lower number' : '',
         });
       }
+    } else if (type === 'text') {
+      if (minLen !== undefined) {
+        validations.push({
+          validation: 'tooShort',
+          message: hasMessages ? 'Provide longer text' : '',
+        });
+      }
+      if (maxLen !== undefined) {
+        validations.push({
+          validation: 'tooLong',
+          message: hasMessages ? 'Provide shorter text' : '',
+        });
+      }
     }
   }
 
@@ -129,6 +149,8 @@ export const FormInput = ({
         placeholder={placeholder}
         required={required}
         value={val}
+        minLength={minLen}
+        maxLength={maxLen}
         min={min}
         max={max}
         step={step}
