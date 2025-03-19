@@ -4,12 +4,20 @@ import { Form } from 'radix-ui';
 import Button from '@/components/Button';
 import { FormInput } from '@/components/forms/FormInput';
 import GpaScale from '@/components/forms/GpaScale';
+import { validateUserSetting } from '@/lib/utils/validations';
 
 const GettingStartedForm = () => {
   const formSubmission = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = Object.fromEntries(new FormData(event.currentTarget));
+
+    console.log(validateUserSetting({
+      required_credits: Number(formData.required_credits),
+      final_gpa_goal: Number(formData.final_gpa_goal),
+      initial_credits: Number(formData.initial_credits),
+      initial_gpa: Number(formData.initial_gpa),
+    }))
 
     console.log(formData);
   };
@@ -50,7 +58,7 @@ const GettingStartedForm = () => {
 
         <div className="flex flex-col gap-4">
           <div>
-            <div className="text-2xl font-semibold">Add Completed Courses</div>
+            <div className="text-xl font-semibold">Add Completed Courses</div>
             <div className="text-sm">
               If you already completed courses, you can add your current GPA
             </div>
