@@ -69,7 +69,7 @@ export const FormInput = ({
   label,
   placeholder,
   required = false,
-  value,
+  value = '',
   type,
   minLen,
   maxLen,
@@ -82,7 +82,7 @@ export const FormInput = ({
   customStyles = '',
   customOnChange = undefined,
 }: InputProps) => {
-  const [val, setVal] = useState(value ?? undefined);
+  const [val, setVal] = useState(value ?? '');
 
   useEffect(() => {
     setVal(value as string)

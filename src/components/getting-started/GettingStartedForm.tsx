@@ -1,4 +1,4 @@
-'use-client';
+'use client';
 
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
@@ -6,14 +6,16 @@ import { FormInput } from '@/components/forms/FormInput';
 import GpaScale from '@/components/forms/GpaScale';
 
 const GettingStartedForm = () => {
-  const formSubmission = async (formData: FormData) => {
-    'use server';
+  const formSubmission = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = Object.fromEntries(new FormData(event.currentTarget));
 
     console.log(formData);
   };
 
   return (
-    <Form.Root action={formSubmission}>
+    <Form.Root onSubmit={formSubmission}>
       <div className="flex flex-col gap-8 w-75 sm:w-160 motion-safe:animate-fade-left">
         <div>
           <div className="text-3xl font-semibold">Getting Started</div>
