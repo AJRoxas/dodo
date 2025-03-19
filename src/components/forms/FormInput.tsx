@@ -2,7 +2,7 @@
 
 import { InputValidation } from '@@/types';
 import { Form } from 'radix-ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface InputProps {
   name: string;
@@ -82,10 +82,13 @@ export const FormInput = ({
   customStyles = '',
   customOnChange = undefined,
 }: InputProps) => {
-  const [val, setVal] = useState(value ?? '');
+  const [val, setVal] = useState(value ?? undefined);
+
+  useEffect(() => {
+    setVal(value as string)
+  }, [value])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
     setVal(event.target.value);
   };
 

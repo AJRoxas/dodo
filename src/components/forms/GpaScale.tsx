@@ -2,45 +2,42 @@
 
 import Button from '@/components/Button';
 import GpaGrade from '@/components/forms/GpaGrade';
+import { Scale } from '@@/types';
 import { faArrowUp91 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
-type Scale = {
-  id: number;
-  user_id?: string;
-  letter: string;
-  gpa: number;
-  grade: number;
-};
 
-const initialScales: () => Scale[] = () => {
-  let key = Date.now();
-   return (
-    [
-      { id: ++key, letter: 'A+', gpa: 4.0, grade: 90 },
-      { id: ++key, letter: 'A', gpa: 4.0, grade: 85 },
-      { id: ++key, letter: 'A-', gpa: 3.7, grade: 80 },
-      { id: ++key, letter: 'B+', gpa: 3.3, grade: 77 },
-      { id: ++key, letter: 'B', gpa: 3.0, grade: 73 },
-      { id: ++key, letter: 'B-', gpa: 2.7, grade: 70 },
-      { id: ++key, letter: 'C+', gpa: 2.3, grade: 67 },
-      { id: ++key, letter: 'C', gpa: 2.0, grade: 63 },
-      { id: ++key, letter: 'C-', gpa: 1.7, grade: 60 },
-      { id: ++key, letter: 'D+', gpa: 1.3, grade: 57 },
-      { id: ++key, letter: 'D', gpa: 1.0, grade: 53 },
-      { id: ++key, letter: 'D-', gpa: 0.7, grade: 50 },
-      { id: ++key, letter: 'F', gpa: 0, grade: 0 },
-    ]
-   )
-};
+const defaultScale: Scale[] = (() => {
+  let key = 1;
 
-const GpaScales = () => {
-  const [scale, setScale] = useState<Scale[]>(initialScales());
+  return [
+    { id: ++key, letter: 'A+', gpa: 4.0, grade: 90 },
+    { id: ++key, letter: 'A', gpa: 4.0, grade: 85 },
+    { id: ++key, letter: 'A-', gpa: 3.7, grade: 80 },
+    { id: ++key, letter: 'B+', gpa: 3.3, grade: 77 },
+    { id: ++key, letter: 'B', gpa: 3.0, grade: 73 },
+    { id: ++key, letter: 'B-', gpa: 2.7, grade: 70 },
+    { id: ++key, letter: 'C+', gpa: 2.3, grade: 67 },
+    { id: ++key, letter: 'C', gpa: 2.0, grade: 63 },
+    { id: ++key, letter: 'C-', gpa: 1.7, grade: 60 },
+    { id: ++key, letter: 'D+', gpa: 1.3, grade: 57 },
+    { id: ++key, letter: 'D', gpa: 1.0, grade: 53 },
+    { id: ++key, letter: 'D-', gpa: 0.7, grade: 50 },
+    { id: ++key, letter: 'F', gpa: 0, grade: 0 },
+  ]
+})();
+
+interface GpaScaleProps {
+  initScale? : Scale[]
+}
+
+const GpaScale = ({initScale = defaultScale} : GpaScaleProps) => {
+  const [scale, setScale] = useState<Scale[]>(initScale);
 
   // To be used in the future
   useEffect(() => {
-    setScale(initialScales());
-  }, []);
+    setScale([...initScale]);
+  }, [initScale]);
 
   const removeGrade = (id: number) => {
     setScale(scale.filter((grade) => id != grade.id));
@@ -99,7 +96,7 @@ const GpaScales = () => {
 
   const resetScale = (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setScale(initialScales());
+    setScale([...initScale]);
   };
 
   // 80 and 180
@@ -156,4 +153,4 @@ const GpaScales = () => {
   );
 };
 
-export default GpaScales;
+export default GpaScale;

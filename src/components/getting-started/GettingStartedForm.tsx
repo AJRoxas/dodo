@@ -3,7 +3,7 @@
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
 import { FormInput } from '@/components/forms/FormInput';
-import GpaScales from '@/components/forms/GpaScales';
+import GpaScale from '@/components/forms/GpaScale';
 
 const GettingStartedForm = () => {
   const formSubmission = async (formData: FormData) => {
@@ -75,7 +75,7 @@ const GettingStartedForm = () => {
           </div>
         </div>
 
-        <GpaScales/>
+        <GpaScale/>
 
         <Form.Submit asChild>
           <Button>Submit</Button>
