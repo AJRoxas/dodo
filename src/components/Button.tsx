@@ -28,7 +28,8 @@ const Button = ({
       : 'h-9 rounded-sm';
   const color =
     size === 'fas' ? 'bg-transparent text-dark' : 'bg-primary text-light';
-  const btnWidth = size === 'fas' ? 'min-w-6' : isHalved ? 'w-37.5' : 'w-75';
+  // This allows 2 to exist with gap-2 on the smallest screen
+  const btnWidth = size === 'fas' ? 'min-w-6' : isHalved ? 'w-36' : 'w-75';
   const style = `${btnSize} ${btnWidth} ${color} cursor-pointer`;
   return (
     <button

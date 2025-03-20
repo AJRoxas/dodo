@@ -20,7 +20,7 @@ export type InputValidation = {
 export type Scale = {
   id: number;
   user_id?: string;
-  letter: string;
-  gpa: number;
-  grade: number;
+  letter?: string;
+  gpa?: number;
+  grade?: number;
 };

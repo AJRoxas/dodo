@@ -3,7 +3,7 @@
 import Button from '@/components/Button';
 import GpaGrade from '@/components/forms/GpaGrade';
 import { Scale } from '@@/types';
-import { faArrowUp91 } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp91, faDiagramNext } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { FormInput } from '@/components/forms/FormInput';
 import {
@@ -94,14 +94,25 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
     );
   };
 
-  const sortScale = (e: React.MouseEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    scale.sort((a: Scale, b: Scale) => b.grade - a.grade);
+  const sortScale = (event: React.MouseEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    scale.sort((a: Scale, b: Scale) => {
+      if (b === undefined) return -1;
+      if (a === undefined) return 1;
+      return b.grade! - a.grade!;
+    });
     setScale([...scale]);
   };
 
-  const resetScale = (e: React.MouseEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const addToScale = (event: React.MouseEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setScale([...scale, {
+      id: Date.now()
+    }]);
+  };
+
+  const resetScale = (event: React.MouseEvent<HTMLInputElement>) => {
+    event.preventDefault();
     setScale([...initScale]);
   };
 
@@ -145,9 +156,12 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between gap-2">
+      <div className="flex flex-wrap justify-between gap-2">
         <Button icon={faArrowUp91} isHalved={true} onClick={sortScale}>
           Sort
+        </Button>
+        <Button icon={faDiagramNext} isHalved={true} onClick={addToScale}>
+          Add
         </Button>
         <Button isHalved={true} onClick={resetScale}>
           Reset to Default

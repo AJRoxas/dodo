@@ -32,9 +32,7 @@ export const validateUserSetting = (userSettingForm: {
 export const validateGpaScaleLetters = (gpaScale: Scale[]) => {
   let result = gpaScale.every((everyGrade, i, scale) => {
     return (
-      gpaGrade.partial().safeParse({
-        letter: everyGrade.letter,
-      }).success &&
+      gpaLetter.safeParse(everyGrade.letter).success &&
       scale.findIndex((findGrade) => findGrade.letter == everyGrade.letter) == i
     );
   });
@@ -43,10 +41,8 @@ export const validateGpaScaleLetters = (gpaScale: Scale[]) => {
 };
 
 export const validateGpaScaleGpas = (gpaScale: Scale[]) => {
-  let result = gpaScale.every((everyGrade, i, scale) => {
-    return gpaGrade.partial().safeParse({
-      gpa: everyGrade.gpa,
-    }).success;
+  let result = gpaScale.every((everyGrade) => {
+    return nonnegativeInput.safeParse(everyGrade.gpa).success;
   });
 
   return result;
@@ -55,9 +51,7 @@ export const validateGpaScaleGpas = (gpaScale: Scale[]) => {
 export const validateGpaScaleGrades = (gpaScale: Scale[]) => {
   let result = gpaScale.every((everyGrade, i, scale) => {
     return (
-      gpaGrade.partial().safeParse({
-        grade: everyGrade.grade,
-      }).success &&
+      nonnegativeInput.max(100).safeParse(everyGrade.grade).success &&
       scale.findIndex((findGrade) => findGrade.grade == everyGrade.grade) == i
     );
   });

@@ -4,9 +4,9 @@ import Button from '@/components/Button';
 
 interface GpaGradeProps {
   id: number;
-  letter: string;
-  gpa: number;
-  grade: number;
+  letter?: string;
+  gpa?: number;
+  grade?: number;
   onClick: React.MouseEventHandler<HTMLElement>;
   changeLetter?: React.ChangeEventHandler<HTMLElement>;
   changeGpa?: React.ChangeEventHandler<HTMLElement>;

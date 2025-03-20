@@ -19,6 +19,7 @@ const GettingStartedForm = () => {
       initial_gpa: Number(formData.initial_gpa),
     };
     const gpaScale = JSON.parse(formData.gpa_scale as string);
+    console.log(gpaScale)
 
     console.log(validateUserSetting(userSetting));
     console.log(validateGpaScale(gpaScale));
