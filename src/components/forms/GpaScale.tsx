@@ -1,8 +1,8 @@
 'use client';
 
 import Button from '@/components/Button';
-import GpaGrade from '@/components/forms/GpaGrade';
-import { Scale } from '@@/types';
+import GpaScaleRow from '@/components/forms/GpaScaleRow';
+import { GpaScaleEntry } from '@@/types';
 import { faArrowUp91, faDiagramNext } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { FormInput } from '@/components/forms/FormInput';
@@ -13,7 +13,7 @@ import {
   validateGpaScaleLetters,
 } from '@/lib/utils/validations';
 
-const defaultScale: Scale[] = (() => {
+const defaultScale: GpaScaleEntry[] = (() => {
   let key = 1;
 
   return [
@@ -34,11 +34,11 @@ const defaultScale: Scale[] = (() => {
 })();
 
 interface GpaScaleProps {
-  initScale?: Scale[];
+  initScale?: GpaScaleEntry[];
 }
 
 const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
-  const [scale, setScale] = useState<Scale[]>(initScale);
+  const [scale, setScale] = useState<GpaScaleEntry[]>(initScale);
 
   // To be used in the future
   useEffect(() => {
@@ -96,7 +96,7 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
 
   const sortScale = (event: React.MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
-    scale.sort((a: Scale, b: Scale) => {
+    scale.sort((a: GpaScaleEntry, b: GpaScaleEntry) => {
       if (b === undefined) return -1;
       if (a === undefined) return 1;
       return b.grade! - a.grade!;
@@ -177,7 +177,7 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
           <div className="min-w-6"></div>
         </div>
         {scale.map(({ id, letter, gpa, grade }) => (
-          <GpaGrade
+          <GpaScaleRow
             key={id}
             id={id}
             letter={letter}
@@ -187,14 +187,14 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
               e.preventDefault();
               removeGrade(id);
             }}
-            changeLetter={(e: React.ChangeEvent<HTMLInputElement>) => {
-              modifyLetter(id, e.target.value as string);
+            changeLetter={(event: React.ChangeEvent<HTMLInputElement>) => {
+              modifyLetter(id, event.target.value as string);
             }}
-            changeGpa={(e: React.ChangeEvent<HTMLInputElement>) => {
-              modifyGpa(id, Number(e.target.value));
+            changeGpa={(event: React.ChangeEvent<HTMLInputElement>) => {
+              modifyGpa(id, Number(event.target.value));
             }}
-            changeGrade={(e: React.ChangeEvent<HTMLInputElement>) => {
-              modifyGrade(id, Number(e.target.value));
+            changeGrade={(event: React.ChangeEvent<HTMLInputElement>) => {
+              modifyGrade(id, Number(event.target.value));
             }}
           />
         ))}

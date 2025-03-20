@@ -1,12 +1,13 @@
+import { GpaScaleEntry } from '@@/types';
+import { usersettings } from '@prisma/client';
 import { z } from 'zod';
-import { Scale } from '@@/types';
 
 // UseSettings inputs, GpaScales grade and gpa input
 const nonnegativeInput = z.number().nonnegative().safe();
 // GpaScales letter input
 const gpaLetter = z.string().trim().min(1).max(3);
 
-const userSetting = z.object({
+const academicGoals = z.object({
   required_credits: nonnegativeInput,
   final_gpa_goal: nonnegativeInput,
   initial_credits: nonnegativeInput,
@@ -16,70 +17,95 @@ const userSetting = z.object({
 const gpaGrade = z.object({
   letter: gpaLetter,
   gpa: nonnegativeInput,
-  grade: nonnegativeInput.max(100),
+  grade: nonnegativeInput,
 });
 
-export const validateUserSetting = (userSettingForm: {
-  required_credits: number;
-  final_gpa_goal: number;
-  initial_credits: number;
-  initial_gpa: number;
-}) => {
-  const result = userSetting.safeParse(userSettingForm);
+export const validateAcademicGoals = ({
+  required_credits,
+  final_gpa_goal,
+  initial_credits,
+  initial_gpa,
+}: usersettings) => {
+  const result = academicGoals.safeParse({
+    required_credits,
+    final_gpa_goal,
+    initial_credits,
+    initial_gpa,
+  });
   return result.success;
 };
 
-export const validateGpaScaleLetters = (gpaScale: Scale[]) => {
-  let result = gpaScale.every((everyGrade, i, scale) => {
+export const validateGpaScaleLetters = (gpaScale: GpaScaleEntry[]) => {
+  console.log('Called')
+  let result = gpaScale.every((everyEntry, i, scale) => {
     return (
-      gpaLetter.safeParse(everyGrade.letter).success &&
-      scale.findIndex((findGrade) => findGrade.letter == everyGrade.letter) == i
+      gpaLetter.safeParse(everyEntry.letter).success &&
+      scale.findIndex((findEntry) => findEntry.letter == everyEntry.letter) == i
     );
   });
 
   return result;
 };
 
-export const validateGpaScaleGpas = (gpaScale: Scale[]) => {
-  let result = gpaScale.every((everyGrade) => {
-    return nonnegativeInput.safeParse(everyGrade.gpa).success;
+export const validateGpaScaleGpas = (gpaScale: GpaScaleEntry[]) => {
+  let result = gpaScale.every((everyEntry) => {
+    return nonnegativeInput.safeParse(everyEntry.gpa).success;
   });
 
   return result;
 };
 
-export const validateGpaScaleGrades = (gpaScale: Scale[]) => {
-  let result = gpaScale.every((everyGrade, i, scale) => {
+export const validateGpaScaleGrades = (gpaScale: GpaScaleEntry[]) => {
+  let result = gpaScale.every((everyEntry, i, scale) => {
     return (
-      nonnegativeInput.max(100).safeParse(everyGrade.grade).success &&
-      scale.findIndex((findGrade) => findGrade.grade == everyGrade.grade) == i
+      nonnegativeInput.safeParse(everyEntry.grade).success &&
+      scale.findIndex((findEntry) => findEntry.grade == everyEntry.grade) == i
     );
   });
 
   return result;
 };
 
-export const validateGpaScaleHasFailingGrade = (gpaScale: Scale[]) => {
-  let result = gpaScale.findIndex((findGrade) => findGrade.grade == 0) > 0;
+export const validateGpaScaleHasFailingGrade = (gpaScale: GpaScaleEntry[]) => {
+  let result = gpaScale.findIndex((findEntry) => findEntry.grade == 0) > 0;
 
   return result;
 };
 
-export const validateGpaScale = (gpaScale: Scale[]) => {
-  let result = gpaScale.every((everyGrade, i, scale) => {
+export const validateGpaScale = (gpaScale: GpaScaleEntry[]) => {
+  let result = gpaScale.every((everyEntry, i, scale) => {
     return (
       gpaGrade.safeParse({
-        letter: everyGrade.letter,
-        gpa: everyGrade.gpa,
-        grade: everyGrade.grade,
+        letter: everyEntry.letter,
+        gpa: everyEntry.gpa,
+        grade: everyEntry.grade,
       }).success &&
-      scale.findIndex((findGrade) => findGrade.letter == everyGrade.letter) ==
+      scale.findIndex((findEntry) => findEntry.letter == everyEntry.letter) ==
         i &&
-      scale.findIndex((findGrade) => findGrade.grade == everyGrade.grade) ==
+      scale.findIndex((findEntry) => findEntry.grade == everyEntry.grade) ==
         i &&
-      scale.findIndex((findGrade) => findGrade.grade == 0) > 0
+      scale.findIndex((findEntry) => findEntry.grade == 0) > 0
     );
   });
 
   return result;
+};
+
+export const validateUserSettings = (
+  {
+    required_credits,
+    final_gpa_goal,
+    initial_credits,
+    initial_gpa,
+  }: usersettings,
+  gpaScale: GpaScaleEntry[]
+) => {
+  return (
+    validateAcademicGoals({
+      required_credits,
+      final_gpa_goal,
+      initial_credits,
+      initial_gpa,
+    } as usersettings) && validateGpaScale(gpaScale)
+  );
 };

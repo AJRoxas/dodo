@@ -2,7 +2,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FormInput } from '@/components/forms/FormInput';
 import Button from '@/components/Button';
 
-interface GpaGradeProps {
+interface GpaScaleRowProps {
   id: number;
   letter?: string;
   gpa?: number;
@@ -13,7 +13,7 @@ interface GpaGradeProps {
   changeGrade?: React.ChangeEventHandler<HTMLElement>;
 }
 
-const GpaGrade = ({
+const GpaScaleRow = ({
   id,
   letter,
   gpa,
@@ -22,7 +22,7 @@ const GpaGrade = ({
   changeLetter,
   changeGpa,
   changeGrade,
-}: GpaGradeProps) => {
+}: GpaScaleRowProps) => {
   return (
     <div className="min-w-75 max-w-160 flex gap-2 justify-between px-2 mb-2">
       <FormInput
@@ -71,4 +71,4 @@ const GpaGrade = ({
   );
 };
 
-export default GpaGrade;
+export default GpaScaleRow;

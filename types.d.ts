@@ -11,15 +11,14 @@
  * "valid"
  */
 // Common Validations
-// 
+//
 export type InputValidation = {
   validation: ValidityMatcher | CustomMatcher;
   message: string;
 };
 
-export type Scale = {
+export type GpaScaleEntry = {
   id: number;
-  user_id?: string;
   letter?: string;
   gpa?: number;
   grade?: number;

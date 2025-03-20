@@ -4,7 +4,8 @@ import { Form } from 'radix-ui';
 import Button from '@/components/Button';
 import { FormInput } from '@/components/forms/FormInput';
 import GpaScale from '@/components/forms/GpaScale';
-import { validateGpaScale, validateUserSetting } from '@/lib/utils/validations';
+import { validateGpaScale, validateAcademicGoals, validateUserSettings } from '@/lib/utils/validations';
+import { usersettings } from '@prisma/client';
 
 const GettingStartedForm = () => {
   const formSubmission = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -17,12 +18,14 @@ const GettingStartedForm = () => {
       final_gpa_goal: Number(formData.final_gpa_goal),
       initial_credits: Number(formData.initial_credits),
       initial_gpa: Number(formData.initial_gpa),
-    };
+    } as usersettings;
     const gpaScale = JSON.parse(formData.gpa_scale as string);
+    console.log(userSetting)
     console.log(gpaScale)
 
-    console.log(validateUserSetting(userSetting));
+    console.log(validateAcademicGoals(userSetting));
     console.log(validateGpaScale(gpaScale));
+    console.log(validateUserSettings(userSetting, gpaScale));
 
     console.log(formData);
   };
