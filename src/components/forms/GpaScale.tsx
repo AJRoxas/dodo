@@ -6,6 +6,12 @@ import { Scale } from '@@/types';
 import { faArrowUp91 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { FormInput } from '@/components/forms/FormInput';
+import {
+  validateGpaScaleGpas,
+  validateGpaScaleGrades,
+  validateGpaScaleHasFailingGrade,
+  validateGpaScaleLetters,
+} from '@/lib/utils/validations';
 
 const defaultScale: Scale[] = (() => {
   let key = 1;
@@ -105,8 +111,38 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
       <div>
         <div className="text-2xl font-semibold">GPA Scale</div>
         <div className="text-sm">
-          Letter grades must be between 1 to 3 characters, GPAs must be at least
-          0 or above, Grades must be at least 0 or above
+          To submit your GPA scale, your scale must meet the following
+          requirements:
+          <div className="text-xs font-semibold">
+            <li
+              className={
+                validateGpaScaleLetters(scale) ? undefined : 'text-error'
+              }
+            >
+              Letter grades must be between 1 to 3 characters and unique
+            </li>
+            <li
+              className={validateGpaScaleGpas(scale) ? undefined : 'text-error'}
+            >
+              GPAs must be at least 0 or above
+            </li>
+            <li
+              className={
+                validateGpaScaleGrades(scale) ? undefined : 'text-error'
+              }
+            >
+              Grades must be at least 0 or above and unique
+            </li>
+            <li
+              className={
+                validateGpaScaleHasFailingGrade(scale)
+                  ? undefined
+                  : 'text-error'
+              }
+            >
+              One grade must have a minimum grade of 0
+            </li>
+          </div>
         </div>
       </div>
       <div className="flex justify-between gap-2">

@@ -29,6 +29,48 @@ export const validateUserSetting = (userSettingForm: {
   return result.success;
 };
 
+export const validateGpaScaleLetters = (gpaScale: Scale[]) => {
+  let result = gpaScale.every((everyGrade, i, scale) => {
+    return (
+      gpaGrade.partial().safeParse({
+        letter: everyGrade.letter,
+      }).success &&
+      scale.findIndex((findGrade) => findGrade.letter == everyGrade.letter) == i
+    );
+  });
+
+  return result;
+};
+
+export const validateGpaScaleGpas = (gpaScale: Scale[]) => {
+  let result = gpaScale.every((everyGrade, i, scale) => {
+    return gpaGrade.partial().safeParse({
+      gpa: everyGrade.gpa,
+    }).success;
+  });
+
+  return result;
+};
+
+export const validateGpaScaleGrades = (gpaScale: Scale[]) => {
+  let result = gpaScale.every((everyGrade, i, scale) => {
+    return (
+      gpaGrade.partial().safeParse({
+        grade: everyGrade.grade,
+      }).success &&
+      scale.findIndex((findGrade) => findGrade.grade == everyGrade.grade) == i
+    );
+  });
+
+  return result;
+};
+
+export const validateGpaScaleHasFailingGrade = (gpaScale: Scale[]) => {
+  let result = gpaScale.findIndex((findGrade) => findGrade.grade == 0) > 0;
+
+  return result;
+};
+
 export const validateGpaScale = (gpaScale: Scale[]) => {
   let result = gpaScale.every((everyGrade, i, scale) => {
     return (
@@ -39,7 +81,9 @@ export const validateGpaScale = (gpaScale: Scale[]) => {
       }).success &&
       scale.findIndex((findGrade) => findGrade.letter == everyGrade.letter) ==
         i &&
-      scale.findIndex((findGrade) => findGrade.grade == everyGrade.grade) == i
+      scale.findIndex((findGrade) => findGrade.grade == everyGrade.grade) ==
+        i &&
+      scale.findIndex((findGrade) => findGrade.grade == 0) > 0
     );
   });
 
