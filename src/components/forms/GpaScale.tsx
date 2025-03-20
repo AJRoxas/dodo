@@ -3,7 +3,7 @@
 import Button from '@/components/Button';
 import GpaScaleRow from '@/components/forms/GpaScaleRow';
 import { GpaScaleEntry } from '@@/types';
-import { faArrowUp91, faDiagramNext } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp91, faDiagramNext, faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { FormInput } from '@/components/forms/FormInput';
 import {
@@ -130,19 +130,19 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
                 validateGpaScaleLetters(scale) ? undefined : 'text-error'
               }
             >
-              Letter grades must be between 1 to 3 characters and unique
+              Letters are 1&minus;3 characters and unique
             </li>
             <li
               className={validateGpaScaleGpas(scale) ? undefined : 'text-error'}
             >
-              GPAs must be at least 0 or above
+              GPAs are 0 or higher
             </li>
             <li
               className={
                 validateGpaScaleGrades(scale) ? undefined : 'text-error'
               }
             >
-              Grades must be at between 0 and 100 and unique
+              Grades are 0 or higher
             </li>
             <li
               className={
@@ -151,7 +151,7 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
                   : 'text-error'
               }
             >
-              One grade must have a minimum grade of 0
+              At least one grade must start at 0
             </li>
           </div>
         </div>
@@ -163,8 +163,8 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
         <Button icon={faDiagramNext} isHalved={true} onClick={addToScale}>
           Add
         </Button>
-        <Button isHalved={true} onClick={resetScale}>
-          Reset to Default
+        <Button icon={faRotateRight} isHalved={true} onClick={resetScale}>
+          Reset
         </Button>
       </div>
       <div>

@@ -36,7 +36,6 @@ export const validateAcademicGoals = ({
 };
 
 export const validateGpaScaleLetters = (gpaScale: GpaScaleEntry[]) => {
-  console.log('Called')
   let result = gpaScale.every((everyEntry, i, scale) => {
     return (
       gpaLetter.safeParse(everyEntry.letter).success &&
@@ -73,20 +72,21 @@ export const validateGpaScaleHasFailingGrade = (gpaScale: GpaScaleEntry[]) => {
 };
 
 export const validateGpaScale = (gpaScale: GpaScaleEntry[]) => {
-  let result = gpaScale.every((everyEntry, i, scale) => {
-    return (
-      gpaGrade.safeParse({
-        letter: everyEntry.letter,
-        gpa: everyEntry.gpa,
-        grade: everyEntry.grade,
-      }).success &&
-      scale.findIndex((findEntry) => findEntry.letter == everyEntry.letter) ==
-        i &&
-      scale.findIndex((findEntry) => findEntry.grade == everyEntry.grade) ==
-        i &&
-      scale.findIndex((findEntry) => findEntry.grade == 0) > 0
-    );
-  });
+  let result =
+    gpaScale.every((everyEntry, i, scale) => {
+      return (
+        gpaGrade.safeParse({
+          letter: everyEntry.letter,
+          gpa: everyEntry.gpa,
+          grade: everyEntry.grade,
+        }).success &&
+        scale.findIndex((findEntry) => findEntry.letter == everyEntry.letter) ==
+          i &&
+        scale.findIndex((findEntry) => findEntry.grade == everyEntry.grade) ==
+          i &&
+        scale.findIndex((findEntry) => findEntry.grade == 0) > 0
+      );
+    }) && validateGpaScaleHasFailingGrade(gpaScale);
 
   return result;
 };
