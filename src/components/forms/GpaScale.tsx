@@ -5,7 +5,7 @@ import GpaGrade from '@/components/forms/GpaGrade';
 import { Scale } from '@@/types';
 import { faArrowUp91 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
-
+import { FormInput } from '@/components/forms/FormInput';
 
 const defaultScale: Scale[] = (() => {
   let key = 1;
@@ -24,14 +24,14 @@ const defaultScale: Scale[] = (() => {
     { id: ++key, letter: 'D', gpa: 1.0, grade: 53 },
     { id: ++key, letter: 'D-', gpa: 0.7, grade: 50 },
     { id: ++key, letter: 'F', gpa: 0, grade: 0 },
-  ]
+  ];
 })();
 
 interface GpaScaleProps {
-  initScale? : Scale[]
+  initScale?: Scale[];
 }
 
-const GpaScale = ({initScale = defaultScale} : GpaScaleProps) => {
+const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
   const [scale, setScale] = useState<Scale[]>(initScale);
 
   // To be used in the future
@@ -149,6 +149,12 @@ const GpaScale = ({initScale = defaultScale} : GpaScaleProps) => {
           />
         ))}
       </div>
+      <FormInput
+        name={`gpa_scale`}
+        value={JSON.stringify(scale)}
+        label=""
+        type="hidden"
+      ></FormInput>
     </div>
   );
 };

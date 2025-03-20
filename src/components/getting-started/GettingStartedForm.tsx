@@ -4,7 +4,7 @@ import { Form } from 'radix-ui';
 import Button from '@/components/Button';
 import { FormInput } from '@/components/forms/FormInput';
 import GpaScale from '@/components/forms/GpaScale';
-import { validateUserSetting } from '@/lib/utils/validations';
+import { validateGpaScale, validateUserSetting } from '@/lib/utils/validations';
 
 const GettingStartedForm = () => {
   const formSubmission = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -12,12 +12,16 @@ const GettingStartedForm = () => {
 
     const formData = Object.fromEntries(new FormData(event.currentTarget));
 
-    console.log(validateUserSetting({
+    const userSetting = {
       required_credits: Number(formData.required_credits),
       final_gpa_goal: Number(formData.final_gpa_goal),
       initial_credits: Number(formData.initial_credits),
       initial_gpa: Number(formData.initial_gpa),
-    }))
+    };
+    const gpaScale = JSON.parse(formData.gpa_scale as string);
+
+    console.log(validateUserSetting(userSetting));
+    console.log(validateGpaScale(gpaScale));
 
     console.log(formData);
   };
@@ -85,7 +89,7 @@ const GettingStartedForm = () => {
           </div>
         </div>
 
-        <GpaScale/>
+        <GpaScale />
 
         <Form.Submit asChild>
           <Button>Submit</Button>

@@ -8,9 +8,9 @@ interface InputProps {
   name: string;
   label: string;
   placeholder?: string;
-  required: boolean;
+  required?: boolean;
   value?: string | number;
-  type: 'email' | 'number' | 'text';
+  type: 'email' | 'number' | 'text' | 'hidden';
 
   // For length
   minLen?: number;
@@ -85,12 +85,24 @@ export const FormInput = ({
   const [val, setVal] = useState(value ?? '');
 
   useEffect(() => {
-    setVal(value as string)
-  }, [value])
+    setVal(value as string);
+  }, [value]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVal(event.target.value);
+
+    if (customOnChange !== undefined) customOnChange(event);
   };
+
+  if (type == 'hidden') {
+    return (
+      <Form.Field name={name} className="!hidden">
+        <Form.Control asChild>
+          <input type={type} onChange={handleChange} value={val} />
+        </Form.Control>
+      </Form.Field>
+    );
+  }
 
   const validations: InputValidation[] = [];
 
@@ -157,14 +169,7 @@ export const FormInput = ({
         min={min}
         max={max}
         step={step}
-        onChange={
-          customOnChange === undefined
-            ? handleChange
-            : (e) => {
-                handleChange(e);
-                customOnChange(e);
-              }
-        }
+        onChange={handleChange}
       />
     </FormInputWrapper>
   );
