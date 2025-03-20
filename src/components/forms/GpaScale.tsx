@@ -131,7 +131,7 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
                 validateGpaScaleGrades(scale) ? undefined : 'text-error'
               }
             >
-              Grades must be at least 0 or above and unique
+              Grades must be at between 0 and 100 and unique
             </li>
             <li
               className={
