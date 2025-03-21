@@ -12,8 +12,12 @@ import { usersettings } from '@prisma/client';
 import AcademicGoals from '../forms/templates/AcademicGoals';
 import { useState } from 'react';
 import ToastWrapper from '../ToastWrapper';
+import { auth } from '@/lib/firebase/firebase';
+import { useRouter } from 'next/navigation';
 
 const GettingStartedForm = () => {
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<'error' | 'success' | 'default' | undefined>(
     undefined
@@ -25,7 +29,7 @@ const GettingStartedForm = () => {
     event.preventDefault();
     setOpen(false);
     const formData = Object.fromEntries(new FormData(event.currentTarget));
-    setTimeout(() => {
+    setTimeout(async () => {
       const academicGoals = {
         required_credits: Number(formData.required_credits),
         final_gpa_goal: Number(formData.final_gpa_goal),
@@ -48,12 +52,43 @@ const GettingStartedForm = () => {
         }
 
         setType('error');
+        setOpen(true);
       } else {
         setTitle('Success');
         setMessage('Your information is being saved!');
         setType('success');
+        setOpen(true);
+
+        const response = await fetch('/api/user-setting', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: auth.currentUser?.uid,
+            required_credits: academicGoals.required_credits,
+            final_gpa_goal: academicGoals.final_gpa_goal,
+            initial_gpa: academicGoals.initial_gpa,
+            initial_credits: academicGoals.initial_credits,
+            gpa_scale: gpaScale,
+          }),
+        });
+
+        if (response.ok) {
+          router.push('/dashboard');
+        } else {
+          setOpen(false);
+          setTimeout(() => {
+            setTitle('Server Error');
+            setMessage(
+              'Your information was not saved, please refresh and try again.'
+            );
+            setType('error');
+            setOpen(true);
+          }, 200);
+        }
       }
-      setOpen(true);
     }, 200);
   };
 
