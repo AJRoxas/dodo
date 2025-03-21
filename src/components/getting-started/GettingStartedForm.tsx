@@ -54,7 +54,7 @@ const GettingStartedForm = () => {
         setType('success');
       }
       setOpen(true);
-    }, 300);
+    }, 200);
   };
 
   return (
