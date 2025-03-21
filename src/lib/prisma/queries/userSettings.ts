@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma/prisma';
 import { prismaTryCatch } from '@/lib/utils/tryCatchWrappers';
-import { usersettings } from '@prisma/client';
+import { Prisma, usersettings } from '@prisma/client';
 
 export const getUserSetting = (uid: string) => {
   return prismaTryCatch(async () => {
@@ -16,8 +16,16 @@ export const getUserSetting = (uid: string) => {
 export const createUserSetting = (usersettings: usersettings) => {
   return prismaTryCatch(async () => {
     const newUserSetting = await prisma.usersettings.create({
-      data: usersettings,
+      data: {
+        user_id: usersettings.user_id,
+        required_credits: usersettings.required_credits,
+        final_gpa_goal: usersettings.final_gpa_goal,
+        initial_credits: usersettings.initial_credits,
+        initial_gpa: usersettings.initial_gpa,
+        gpa_scale: usersettings.gpa_scale as Prisma.JsonArray
+      }
     });
+
     return newUserSetting;
   });
 };

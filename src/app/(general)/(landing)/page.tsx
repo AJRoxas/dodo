@@ -6,7 +6,7 @@ const LandingPage = () => {
     <main>
       <HookSection />
       <FeaturesSection />
-      <div className="flex flex-col justify-center items-center gap-1 p-10 sm:p-20">
+      <div className="gap-1 container-col">
         <div className="max-w-xs font-semibold text-3xl text-center text-primary">
           Want to know more about dodo?
         </div>

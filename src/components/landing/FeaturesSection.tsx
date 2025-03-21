@@ -60,8 +60,10 @@ const upcomingFeatures = [
 
 const FeaturesSection = () => {
   return (
-    <div className="flex flex-col justify-center items-center gap-8 p-10 sm:p-20 bg-gradient-primary text-light">
-      <div className="font-semibold text-3xl">What can dodo do?</div>
+    <div className="container-col bg-gradient-primary text-light">
+      <div className="font-semibold text-3xl text-center">
+        What can dodo do?
+      </div>
       <div className="w-full max-w-5xl flex justify-center items-center flex-wrap gap-5">
         {currentFeatures.map((feature, index) => (
           <FeatureIcon
@@ -72,7 +74,9 @@ const FeaturesSection = () => {
           ></FeatureIcon>
         ))}
       </div>
-      <div className="font-semibold text-3xl">What to expect soon!</div>
+      <div className="font-semibold text-3xl text-center">
+        What to expect soon!
+      </div>
       <div className="w-full max-w-5xl flex justify-center items-center flex-wrap gap-5">
         {upcomingFeatures.map((feature, index) => (
           <FeatureIcon

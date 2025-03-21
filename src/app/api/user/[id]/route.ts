@@ -15,7 +15,6 @@ export async function DELETE(
     const user = await deleteUser(id);
 
     if (user.error !== undefined) {
-      console.log(user.error);
       NextResponse.json(user, { status: 208 });
     }
 

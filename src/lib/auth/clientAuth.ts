@@ -1,5 +1,3 @@
-'use-client';
-
 import { auth } from '@/lib/firebase/firebase';
 import {
   AuthProvider,
@@ -21,7 +19,6 @@ const signInUser = (credentials: any) => {
     });
 
     const user = auth.currentUser!;
-    console.log(user);
 
     const response = await fetch('/api/user', {
       method: 'POST',
