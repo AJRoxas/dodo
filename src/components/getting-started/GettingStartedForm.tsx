@@ -27,6 +27,7 @@ const GettingStartedForm = () => {
 
   const formSubmission = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    event.stopPropagation();
     setOpen(false);
     const formData = Object.fromEntries(new FormData(event.currentTarget));
     setTimeout(async () => {
