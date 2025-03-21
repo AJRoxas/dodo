@@ -6,19 +6,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 interface ButtonProps {
   children?: React.ReactNode;
   icon?: IconDefinition;
+  ariaLabel?: string;
   isHalved?: boolean;
   isSubmit?: boolean;
   onClick?: React.MouseEventHandler;
   size?: string;
+  customStyles?: string;
 }
 
 const Button = ({
-  children = undefined,
-  icon = undefined,
+  children,
+  icon,
+  ariaLabel,
   isHalved = false,
-  onClick = undefined,
+  onClick,
   size = '',
   isSubmit = false,
+  customStyles,
 }: ButtonProps) => {
   const btnSize =
     size === 'lg'
@@ -30,12 +34,13 @@ const Button = ({
     size === 'fas' ? 'bg-transparent text-dark' : 'bg-primary text-light';
   // This allows 2 to exist with gap-2 on the smallest screen
   const btnWidth = size === 'fas' ? 'min-w-6' : isHalved ? 'w-36' : 'w-75';
-  const style = `${btnSize} ${btnWidth} ${color} cursor-pointer`;
+  const style = `${btnSize} ${btnWidth} ${color} cursor-pointer ${customStyles}`;
   return (
     <button
       type={isSubmit ? 'submit' : undefined}
       className={style}
       onClick={onClick}
+      aria-label={ariaLabel}
     >
       <div className="flex justify-center items-center gap-2">
         {icon !== undefined ? (

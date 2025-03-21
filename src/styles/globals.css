@@ -7,7 +7,10 @@
   --color-primary: #8031a7;
   --color-secondary: #407ec9;
   --color-success: #00b08b;
+  --color-success-light: #bcfff1;
   --color-error: #f9423a;
+  --color-error-light: #fdb3b0;
+
 
   /* Toast Wrapper */
   --viewport-padding: 32px;
@@ -99,6 +102,12 @@
   .toast-root {
     @apply p-4 bg-light rounded-md shadow-md grid grid-cols-[auto_max-content] items-center;
 
+    &.error {
+      @apply bg-error-light
+    }
+    &.success {
+      @apply bg-success-light
+    }
     &[data-state='open'] {
       @apply animate-toast-open;
     }
@@ -116,15 +125,15 @@
     }
   }
 
-  .ToastTitle {
+  .toast-title {
     @apply order-1 font-semibold;
   }
 
-  .ToastDescription {
+  .toast-description {
     @apply order-2 col-start-1 row-span-1 text-sm;
   }
 
-  .ToastAction {
+  .toast-action {
     @apply order-3 col-start-2 row-start-1 row-span-2;
   }
 }

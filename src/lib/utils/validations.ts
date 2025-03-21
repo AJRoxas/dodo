@@ -71,6 +71,19 @@ export const validateGpaScaleHasFailingGrade = (gpaScale: GpaScaleEntry[]) => {
   return result;
 };
 
+// Validates the input fields only
+export const validateGpaScaleInput = (gpaScale: GpaScaleEntry[]) => {
+  let result = gpaScale.every((everyEntry) => {
+    return gpaGrade.safeParse({
+      letter: everyEntry.letter,
+      gpa: everyEntry.gpa,
+      grade: everyEntry.grade,
+    }).success;
+  });
+
+  return result;
+};
+
 export const validateGpaScale = (gpaScale: GpaScaleEntry[]) => {
   let result =
     gpaScale.every((everyEntry, i, scale) => {

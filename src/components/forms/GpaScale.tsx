@@ -142,7 +142,7 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
                 validateGpaScaleGrades(scale) ? undefined : 'text-error'
               }
             >
-              Grades are 0 or higher
+              Grades are 0 or higher and unique
             </li>
             <li
               className={

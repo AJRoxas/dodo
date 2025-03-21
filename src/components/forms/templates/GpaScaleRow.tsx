@@ -65,7 +65,7 @@ const GpaScaleRow = ({
         customOnChange={changeGrade}
       ></FormInput>
       <div className="w-6 flex flex-col justify-center">
-        <Button icon={faXmark} size="fas" onClick={onClick} />
+        <Button icon={faXmark} size="fas" onClick={onClick} ariaLabel='Delete' />
       </div>
     </div>
   );
