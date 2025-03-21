@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/Button';
-import GpaScaleRow from '@/components/forms/GpaScaleRow';
+import GpaScaleRow from '@/components/forms/templates/GpaScaleRow';
 import { GpaScaleEntry } from '@@/types';
 import { faArrowUp91, faDiagramNext, faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
@@ -122,7 +122,7 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
       <div>
         <div className="text-2xl font-semibold">GPA Scale</div>
         <div className="text-sm">
-          To submit your GPA scale, your scale must meet the following
+          To submit your GPA scale, it must meet the following
           requirements:
           <div className="text-xs font-semibold">
             <li

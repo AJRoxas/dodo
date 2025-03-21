@@ -8,6 +8,51 @@
   --color-secondary: #407ec9;
   --color-success: #00b08b;
   --color-error: #f9423a;
+
+  /* Toast Wrapper */
+  --viewport-padding: 32px;
+  --animate-toast-open: toast-open 200ms ease-in-out;
+  --animate-toast-close: toast-close 200ms ease-in;
+  --animate-toast-end: toast-end 100ms ease-out;
+
+  @keyframes toast-open {
+    0% {
+      opacity: 0;
+      transform: translateX(var(--viewport-padding));
+    }
+    75% {
+      opacity: 0.2;
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes toast-close {
+    100% {
+      opacity: 0;
+      transform: translateX(var(--viewport-padding));
+    }
+    25% {
+      opacity: 0.2;
+    }
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes toast-end {
+    from {
+      opacity: 1;
+      transform: translateX(var(--radix-toast-swipe-end-x));
+    }
+    to {
+      opacity: 0;
+      transform: translateX(calc(100% + var(--viewport-padding)));
+    }
+  }
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -46,6 +91,42 @@
   .gpa-cell {
     @apply min-w-20 max-w-48 w-full;
   }
+
+  .toast-viewport {
+    @apply p-8 fixed top-0 right-0 flex flex-col gap-2 w-91 sm:w-116 z-2147483647 outline-none;
+  }
+
+  .toast-root {
+    @apply p-4 bg-light rounded-md shadow-md grid grid-cols-[auto_max-content] items-center;
+
+    &[data-state='open'] {
+      @apply animate-toast-open;
+    }
+    &[data-state='closed'] {
+      @apply animate-toast-close;
+    }
+    &[data-swipe='move'] {
+      @apply transition-transform translate-x-[var(--radix-toast-swipe-move-x)];
+    }
+    &[data-swipe='cancel'] {
+      @apply transition-transform duration-200 ease-out translate-x-0;
+    }
+    &[data-swipe='end'] {
+      @apply animate-toast-end;
+    }
+  }
+
+  .ToastTitle {
+    @apply order-1 font-semibold;
+  }
+
+  .ToastDescription {
+    @apply order-2 col-start-1 row-span-1 text-sm;
+  }
+
+  .ToastAction {
+    @apply order-3 col-start-2 row-start-1 row-span-2;
+  }
 }
 
 @utility bg-gradient-primary {
@@ -57,23 +138,23 @@
 }
 
 @utility h-px-* {
-  height: --value(integer)px;
+  height: --value(integer) px;
 }
 
 @utility max-h-px-* {
-  max-height: --value(integer)px;
+  max-height: --value(integer) px;
 }
 
 @utility min-h-px-* {
-  min-height: --value(integer)px;
+  min-height: --value(integer) px;
 }
 
 @utility max-w-px-* {
-  max-width: --value(integer)px;
+  max-width: --value(integer) px;
 }
 
 @utility min-w-px-* {
-  min-width: --value(integer)px;
+  min-width: --value(integer) px;
 }
 
 @utility text-gradient {
@@ -81,5 +162,5 @@
 }
 
 @utility w-px-* {
-  width: --value(integer)px;
+  width: --value(integer) px;
 }
