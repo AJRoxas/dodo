@@ -50,12 +50,6 @@ const GettingStartedForm = () => {
         });
       }
     } else {
-      showToast({
-        title: 'Success',
-        description: 'Your information is being saved!',
-        type: 'success',
-      });
-
       const response = await fetch('/api/user-setting', {
         method: 'POST',
         headers: {
@@ -73,7 +67,13 @@ const GettingStartedForm = () => {
       });
 
       if (response.ok) {
-        router.push('/dashboard');
+        showToast({
+          title: 'Success',
+          description: 'Your settings have been saved!',
+          type: 'success',
+        });
+
+        router.replace('/dashboard');
       } else {
         showToast({
           title: 'Server Error',
