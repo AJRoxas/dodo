@@ -2,7 +2,7 @@
 
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
-import GpaScale from '@/components/forms/GpaScale';
+import GpaScale from '@/components/forms/templates/GpaScale';
 import {
   validateAcademicGoals,
   validateGpaScaleInput,

@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/Button';
-import GpaScaleRow from '@/components/forms/templates/GpaScaleRow';
+import GpaScaleRow from '@/components/forms/GpaScaleRow';
 import { GpaScaleEntry } from '@@/types';
 import { faArrowUp91, faDiagramNext, faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
