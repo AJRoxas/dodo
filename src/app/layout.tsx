@@ -4,6 +4,7 @@ import '@/styles/globals.css';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import ToastWrapper from '@/components/ToastWrapper';
 config.autoAddCss = false;
 
 const poppins = Poppins({
@@ -34,7 +35,9 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} antialiased`}>{children}</body>
+      <body className={`${poppins.variable} antialiased`}>
+        <ToastWrapper>{children}</ToastWrapper>
+      </body>
     </html>
   );
 };
