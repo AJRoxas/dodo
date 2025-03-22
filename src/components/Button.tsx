@@ -25,16 +25,22 @@ const Button = ({
   customStyles,
 }: ButtonProps) => {
   const btnSize =
-    size === 'lg'
+    size === 'fas'
+      ? 'h-6'
+      : size === 'lg'
       ? 'h-32 rounded-2xl'
       : size === 'md'
       ? 'h-16 rounded-lg'
       : 'h-9 rounded-sm';
+
   const color =
     size === 'fas' ? 'bg-transparent text-dark' : 'bg-primary text-light';
+
   // This allows 2 to exist with gap-2 on the smallest screen
   const btnWidth = size === 'fas' ? 'min-w-6' : isHalved ? 'w-36' : 'w-75';
+
   const style = `${btnSize} ${btnWidth} ${color} cursor-pointer ${customStyles}`;
+
   return (
     <button
       type={isSubmit ? 'submit' : undefined}
