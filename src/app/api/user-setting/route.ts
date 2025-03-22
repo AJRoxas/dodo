@@ -24,8 +24,6 @@ export async function POST(request: NextRequest) {
     const unAuthenticated = await validateToken(request.cookies);
     if (unAuthenticated) return unAuthenticated;
 
-    throw Error;
-
     const body = await request.json();
     const userSetting = await createUserSetting({
       user_id: body.user_id,
