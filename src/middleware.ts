@@ -25,27 +25,27 @@ export async function middleware(request: NextRequest) {
     serviceAccount: firebaseServerConfig.serviceAccount,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleValidToken: async ({ token, decodedToken }, headers) => {
+      const userSetting = await getUserSetting(decodedToken.uid);
       if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
-        const userSetting = await getUserSetting(decodedToken.uid)
-        const location = userSetting !== null ? 
-        '/dashboard' : '/getting-started';
+        const location =
+          userSetting !== null ? '/dashboard' : '/getting-started';
         return redirectToPath(request, location, {
           shouldClearSearchParams: true,
         });
-      } else if (ONBOARDED_PATHS.includes(request.nextUrl.pathname)) {
-        const userSetting = await getUserSetting(decodedToken.uid)
-        if (userSetting === null) {
-          return redirectToPath(request, '/getting-started', {
-            shouldClearSearchParams: true,
-          });
-        }
-      } else if (ONBOARDING_PATHS.includes(request.nextUrl.pathname)) {
-        const userSetting = await getUserSetting(decodedToken.uid)
-        if (userSetting !== null) {
-          return redirectToPath(request, '/dashboard', {
-            shouldClearSearchParams: true,
-          });
-        }
+      } else if (
+        userSetting === null &&
+        ONBOARDED_PATHS.includes(request.nextUrl.pathname)
+      ) {
+        return redirectToPath(request, '/getting-started', {
+          shouldClearSearchParams: true,
+        });
+      } else if (
+        userSetting !== null &&
+        ONBOARDING_PATHS.includes(request.nextUrl.pathname)
+      ) {
+        return redirectToPath(request, '/dashboard', {
+          shouldClearSearchParams: true,
+        });
       }
 
       return NextResponse.next({
