@@ -36,7 +36,11 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
-        <ToastWrapper>{children}</ToastWrapper>
+        <ToastWrapper>
+          <div className="w-full min-h-screen font-poppins bg-light text-dark">
+            {children}
+          </div>
+        </ToastWrapper>
       </body>
     </html>
   );

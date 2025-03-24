@@ -8,9 +8,10 @@ import { useRouter } from 'next/navigation';
 interface NavBarProps {
   // Changes the appearance of navigation if the user is authenticated
   isAuthenticated: boolean;
+  isOnboarded?: boolean;
 }
 
-const NavBar = ({ isAuthenticated }: NavBarProps) => {
+const NavBar = ({ isAuthenticated, isOnboarded = false }: NavBarProps) => {
   const router = useRouter();
 
   const SignInLink = () => {
@@ -36,6 +37,21 @@ const NavBar = ({ isAuthenticated }: NavBarProps) => {
     );
   };
 
+  const OnboardedLinks = () => {
+    return (
+      <>
+        <Link
+          href="#"
+          onClick={async () => {
+            if (await signOutUser()) router.push('/sign-in');
+          }}
+        >
+          Sign out!
+        </Link>
+      </>
+    );
+  };
+
   return (
     <nav className="flex justify-center p-4 shadow-sm">
       <div className="flex justify-between items-end w-full max-w-7xl">
@@ -44,9 +60,13 @@ const NavBar = ({ isAuthenticated }: NavBarProps) => {
         </Link>
         <div className="flex gap-4">
           {isAuthenticated ? (
-            <AuthenticatedLinks></AuthenticatedLinks>
+            isOnboarded ? (
+              <OnboardedLinks />
+            ) : (
+              <AuthenticatedLinks />
+            )
           ) : (
-            <SignInLink></SignInLink>
+            <SignInLink />
           )}
         </div>
       </div>

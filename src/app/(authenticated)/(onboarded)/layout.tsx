@@ -1,14 +1,14 @@
 import NavBar from '@/components/Navbar';
 
-const GeneralLayout = ({
+const AuthenticatedLayout = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <>
-      <NavBar isAuthenticated={false}></NavBar>
+      <NavBar isAuthenticated={true} isOnboarded={true}></NavBar>
       {children}
     </>
   );
 };
 
-export default GeneralLayout;
+export default AuthenticatedLayout;
