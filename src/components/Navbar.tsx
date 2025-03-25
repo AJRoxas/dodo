@@ -27,7 +27,8 @@ const NavBar = ({ isAuthenticated, isOnboarded = false }: NavBarProps) => {
       <>
         <Link
           href="#"
-          onClick={async () => {
+          onClick={async (event: React.MouseEvent<HTMLAnchorElement>) => {
+            event.preventDefault()
             if (await signOutUser()) router.push('/sign-in');
           }}
         >
@@ -42,7 +43,8 @@ const NavBar = ({ isAuthenticated, isOnboarded = false }: NavBarProps) => {
       <>
         <Link
           href="#"
-          onClick={async () => {
+          onClick={async (event: React.MouseEvent<HTMLAnchorElement>) => {
+            event.preventDefault()
             if (await signOutUser()) router.push('/sign-in');
           }}
         >
@@ -53,7 +55,7 @@ const NavBar = ({ isAuthenticated, isOnboarded = false }: NavBarProps) => {
   };
 
   return (
-    <nav className="flex justify-center p-4 shadow-sm">
+    <nav className="flex justify-center p-4 shadow-sm h-16 z-10 relative">
       <div className="flex justify-between items-end w-full max-w-7xl">
         <Link href="/" aria-label="Return back home">
           <Logo className="h-8 w-30 fill-primary self-end"></Logo>
