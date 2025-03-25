@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
     serviceAccount: firebaseServerConfig.serviceAccount,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleValidToken: async ({ token, decodedToken }, headers) => {
-      // Used to validate if the user is onboarded
+      // Used to validate if the user is
       if (!cookieStore.get('isOnboarded')?.value) {
         console.info('Onboard must be checked!')
         const userSetting = await getUserSetting(decodedToken.uid);
@@ -68,6 +68,10 @@ export async function middleware(request: NextRequest) {
       });
     },
     handleInvalidToken: async (reason) => {
+      if (cookieStore.get('isOnboarded')?.value) {
+        console.info('Onboard must be removed!')
+        cookieStore.delete('isOnboarded');
+      }
       console.info('Missing or malformed credentials', { reason });
 
       return redirectToLogin(request, {
