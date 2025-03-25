@@ -9,12 +9,16 @@ import {
   firebaseClientConfig,
 } from '@/lib/firebase/config';
 import { getUserSetting } from './lib/prisma/queries/userSettings';
+import { cookies } from 'next/headers';
 
 const PUBLIC_PATHS = ['/', '/sign-in'];
 const ONBOARDED_PATHS = ['/dashboard'];
 const ONBOARDING_PATHS = ['/getting-started'];
 
 export async function middleware(request: NextRequest) {
+  // Used to validate if the user is onboarded
+  const cookieStore = await cookies();
+
   return authMiddleware(request, {
     loginPath: '/api/login',
     logoutPath: '/api/logout',
@@ -25,22 +29,31 @@ export async function middleware(request: NextRequest) {
     serviceAccount: firebaseServerConfig.serviceAccount,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleValidToken: async ({ token, decodedToken }, headers) => {
-      const userSetting = await getUserSetting(decodedToken.uid);
+      // Used to validate if the user is onboarded
+      if (!cookieStore.get('isOnboarded')?.value) {
+        console.info('Onboard must be checked!')
+        const userSetting = await getUserSetting(decodedToken.uid);
+        if (userSetting) {
+          cookieStore.set('isOnboarded', 'true', { maxAge: 12 * 60 * 60 * 24 });
+        }
+      }
+
+      const isOnboarded = cookieStore.get('isOnboarded')?.value;
+
       if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
-        const location =
-          userSetting !== null ? '/dashboard' : '/getting-started';
+        const location = isOnboarded ? '/dashboard' : '/getting-started';
         return redirectToPath(request, location, {
           shouldClearSearchParams: true,
         });
       } else if (
-        userSetting === null &&
+        !isOnboarded &&
         ONBOARDED_PATHS.includes(request.nextUrl.pathname)
       ) {
         return redirectToPath(request, '/getting-started', {
           shouldClearSearchParams: true,
         });
       } else if (
-        userSetting !== null &&
+        isOnboarded &&
         ONBOARDING_PATHS.includes(request.nextUrl.pathname)
       ) {
         return redirectToPath(request, '/dashboard', {
