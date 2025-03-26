@@ -17,7 +17,7 @@ const DashboardPage = async () => {
 
   return (
     <main className="flex flex-col md:flex-row justify-between items-center">
-      <div className="container-col justify-start bg-primary md:min-h-[calc(100vh_-_64px)] md:w-px-375 text-light">
+      <div className="container-col justify-start bg-primary md:min-h-[calc(100vh_-_64px)] md:w-px-375 text-light motion-safe:animate-fade-right">
         <div className="font-semibold text-3xl">Dashboard</div>
         <div>
           <div className="flex justify-between items-center w-75">
