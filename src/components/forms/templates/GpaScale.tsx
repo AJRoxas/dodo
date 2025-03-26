@@ -12,6 +12,7 @@ import {
   validateGpaScaleHasFailingGrade,
   validateGpaScaleLetters,
 } from '@/lib/utils/validations';
+import { gpaScaleSort } from '@/lib/utils/gpaScale';
 
 const defaultScale: GpaScaleEntry[] = (() => {
   let key = 1;
@@ -96,11 +97,7 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
 
   const sortScale = (event: React.MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
-    scale.sort((a: GpaScaleEntry, b: GpaScaleEntry) => {
-      if (b === undefined) return -1;
-      if (a === undefined) return 1;
-      return b.grade! - a.grade!;
-    });
+    scale.sort(gpaScaleSort);
     setScale([...scale]);
   };
 

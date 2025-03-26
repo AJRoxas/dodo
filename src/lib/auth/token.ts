@@ -20,3 +20,14 @@ export const retrieveTokens = async (
     serviceAccount: firebaseServerConfig.serviceAccount,
   });
 };
+
+export const retrieveDecodedTokens = async (
+  cookies: RequestCookies | ReadonlyRequestCookies
+) => {
+  return (await getTokens(cookies, {
+    apiKey: firebaseClientConfig.apiKey,
+    cookieName: firebaseServerConfig.cookieName,
+    cookieSignatureKeys: firebaseServerConfig.cookieSignatureKeys,
+    serviceAccount: firebaseServerConfig.serviceAccount,
+  }))?.decodedToken;
+};

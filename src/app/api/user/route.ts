@@ -2,6 +2,7 @@ import { createUser } from '@/lib/prisma/queries/users';
 import { validateToken } from '@/lib/auth/serverAuth';
 import { apiTryCatch } from '@/lib/utils/tryCatchWrappers';
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 
 export async function POST(request: NextRequest) {
   return await apiTryCatch(async () => {
@@ -16,9 +17,11 @@ export async function POST(request: NextRequest) {
     });
 
     if (user.error !== undefined) {
-      return NextResponse.json(user, { status: 208 })
+      revalidateTag('dashboard');
+      return NextResponse.json(user, { status: 208 });
     }
 
+    revalidateTag('dashboard');
     return NextResponse.json(user, { status: 201 });
   });
 }

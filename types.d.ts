@@ -11,6 +11,9 @@
  * "valid"
  */
 // Common Validations
+
+import { assessments, courses, coursetags } from "@prisma/client";
+
 //
 export type InputValidation = {
   validation: ValidityMatcher | CustomMatcher;
@@ -23,3 +26,11 @@ export type GpaScaleEntry = {
   gpa?: number;
   grade?: number;
 };
+
+export type CourseWithStats = courses & {
+  assessments: assessments[];
+  coursetags: coursetags[];
+  mark?: number;
+  progress?: number;
+  gpaEntry?: GpaScaleEntry; 
+}

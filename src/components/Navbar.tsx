@@ -8,9 +8,10 @@ import { useRouter } from 'next/navigation';
 interface NavBarProps {
   // Changes the appearance of navigation if the user is authenticated
   isAuthenticated: boolean;
+  isOnboarded?: boolean;
 }
 
-const NavBar = ({ isAuthenticated }: NavBarProps) => {
+const NavBar = ({ isAuthenticated, isOnboarded = false }: NavBarProps) => {
   const router = useRouter();
 
   const SignInLink = () => {
@@ -26,7 +27,8 @@ const NavBar = ({ isAuthenticated }: NavBarProps) => {
       <>
         <Link
           href="#"
-          onClick={async () => {
+          onClick={async (event: React.MouseEvent<HTMLAnchorElement>) => {
+            event.preventDefault()
             if (await signOutUser()) router.push('/sign-in');
           }}
         >
@@ -36,17 +38,37 @@ const NavBar = ({ isAuthenticated }: NavBarProps) => {
     );
   };
 
+  const OnboardedLinks = () => {
+    return (
+      <>
+        <Link
+          href="#"
+          onClick={async (event: React.MouseEvent<HTMLAnchorElement>) => {
+            event.preventDefault()
+            if (await signOutUser()) router.push('/sign-in');
+          }}
+        >
+          Sign out!
+        </Link>
+      </>
+    );
+  };
+
   return (
-    <nav className="flex justify-center p-4 shadow-sm">
+    <nav className="flex justify-center p-4 shadow-sm h-16 z-10 relative">
       <div className="flex justify-between items-end w-full max-w-7xl">
         <Link href="/" aria-label="Return back home">
           <Logo className="h-8 w-30 fill-primary self-end"></Logo>
         </Link>
         <div className="flex gap-4">
           {isAuthenticated ? (
-            <AuthenticatedLinks></AuthenticatedLinks>
+            isOnboarded ? (
+              <OnboardedLinks />
+            ) : (
+              <AuthenticatedLinks />
+            )
           ) : (
-            <SignInLink></SignInLink>
+            <SignInLink />
           )}
         </div>
       </div>

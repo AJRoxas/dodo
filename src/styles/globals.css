@@ -147,23 +147,23 @@
 }
 
 @utility h-px-* {
-  height: --value(integer) px;
+  height: --value(integer)px;
 }
 
 @utility max-h-px-* {
-  max-height: --value(integer) px;
+  max-height: --value(integer)px;
 }
 
 @utility min-h-px-* {
-  min-height: --value(integer) px;
+  min-height: --value(integer)px;
 }
 
 @utility max-w-px-* {
-  max-width: --value(integer) px;
+  max-width: --value(integer)px;
 }
 
 @utility min-w-px-* {
-  min-width: --value(integer) px;
+  min-width: --value(integer)px;
 }
 
 @utility text-gradient {
@@ -171,5 +171,5 @@
 }
 
 @utility w-px-* {
-  width: --value(integer) px;
+  width: --value(integer)px;
 }

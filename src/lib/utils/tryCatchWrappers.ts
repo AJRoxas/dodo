@@ -26,6 +26,7 @@ export const apiTryCatch = async (func: any) => {
   try {
     return await func();
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { error: `Internal Server Error: ${(error as Error).message}` },
       { status: 500 }

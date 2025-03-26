@@ -13,6 +13,7 @@ import AcademicGoals from '../forms/templates/AcademicGoals';
 import { useToast } from '@/components/ToastWrapper';
 import { auth } from '@/lib/firebase/firebase';
 import { useRouter } from 'next/navigation';
+import { gpaScaleSort } from '@/lib/utils/gpaScale';
 
 const GettingStartedForm = () => {
   const router = useRouter();
@@ -50,6 +51,7 @@ const GettingStartedForm = () => {
         });
       }
     } else {
+      gpaScale.sort(gpaScaleSort);
       const response = await fetch('/api/user-setting', {
         method: 'POST',
         headers: {
