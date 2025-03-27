@@ -2,6 +2,8 @@
 @import 'tailwindcss-animated';
 
 @theme {
+  --breakpoint-xs: 25rem;
+
   --color-light: #ffffff;
   --color-dark: #0a0a0a;
   --color-primary: #8031a7;
@@ -11,6 +13,7 @@
   --color-error: #f9423a;
   --color-error-light: #fdb3b0;
 
+  --shadow-card: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
   /* Toast Wrapper */
   --viewport-padding: 32px;
@@ -83,6 +86,10 @@
     @apply flex flex-col justify-center items-center gap-8 p-10 sm:p-20 w-full min-h-full;
   }
 
+  .container-dashboard {
+    @apply flex flex-col items-center gap-8 p-10 w-full min-h-full justify-start md:h-[calc(100vh_-_64px)];
+  }
+
   .form-message {
     @apply text-error text-xs font-semibold;
   }
@@ -103,10 +110,10 @@
     @apply p-4 bg-light rounded-md shadow-md grid grid-cols-[auto_max-content] items-center;
 
     &.error {
-      @apply bg-error-light
+      @apply bg-error-light;
     }
     &.success {
-      @apply bg-success-light
+      @apply bg-success-light;
     }
     &[data-state='open'] {
       @apply animate-toast-open;
@@ -172,4 +179,41 @@
 
 @utility w-px-* {
   width: --value(integer)px;
+}
+
+.ScrollAreaRoot {
+  --scrollbar-size: 10px;
+  @apply w-full h-full overflow-hidden;
+}
+
+.ScrollAreaViewport {
+  @apply w-full h-full border-inherit;
+}
+
+.ScrollAreaScrollbar {
+  @apply flex select-none touch-none p-0.5 rounded-md transition-colors duration-150 ease-out hover:bg-neutral-300;
+
+  &[data-orientation='vertical'] {
+    @apply w-2.5;
+  }
+
+  &[data-orientation='horizontal'] {
+    @apply h-2.5 flex-col;
+  }
+}
+
+.ScrollAreaThumb {
+  @apply flex-1 bg-neutral-600 relative rounded-md;
+}
+/* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
+.ScrollAreaThumb::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  min-width: 44px;
+  min-height: 44px;
 }
