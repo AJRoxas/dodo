@@ -6,6 +6,7 @@
 
   --color-light: #ffffff;
   --color-dark: #0a0a0a;
+  --color-highlight: #ddd;
   --color-primary: #8031a7;
   --color-secondary: #407ec9;
   --color-success: #00b08b;
@@ -83,11 +84,11 @@
 
 @layer components {
   .container-col {
-    @apply flex flex-col justify-center items-center gap-8 p-10 sm:p-20 w-full min-h-full;
+    @apply flex flex-col justify-center items-center gap-8 p-8 py-10 sm:p-20 w-full min-h-full;
   }
 
   .container-dashboard {
-    @apply flex flex-col items-center gap-8 p-10 w-full min-h-full justify-start md:h-[calc(100vh_-_64px)];
+    @apply flex flex-col items-center gap-8 p-8 py-10 w-full min-h-full justify-start md:h-[calc(100vh_-_64px)];
   }
 
   .form-message {
@@ -101,7 +102,10 @@
   .gpa-cell {
     @apply min-w-20 max-w-48 w-full;
   }
+}
 
+/*Toast*/
+@layer components {
   .toast-viewport {
     @apply p-8 fixed top-0 right-0 flex flex-col gap-2 w-91 sm:w-116 z-2147483647 outline-none;
   }
@@ -145,6 +149,38 @@
   }
 }
 
+/*Scrollbar*/
+@layer components {
+  .scroll-root {
+    --scrollbar-size: 10px;
+    @apply w-full h-full overflow-hidden;
+  }
+  
+  .scroll-viewport {
+    @apply w-full h-full border-inherit;
+  }
+  
+  .scroll-bar {
+    @apply flex select-none touch-none p-0.5 rounded-md transition-colors duration-150 ease-out hover:bg-highlight;
+  
+    &[data-orientation='vertical'] {
+      @apply w-2.5;
+    }
+  
+    &[data-orientation='horizontal'] {
+      @apply h-2.5 flex-col;
+    }
+  }
+  
+  .scroll-thumb {
+    @apply flex-1 bg-primary relative rounded-md;
+    /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
+    &::before {
+      @apply content-[''] absolute top-[50%] left-[50%] translate-[-50%,-50%] w-full h-full min-w-11 min-h-11;
+    }
+  }
+}
+
 @utility bg-gradient-primary {
   @apply bg-linear-to-b from-primary to-secondary;
 }
@@ -179,41 +215,4 @@
 
 @utility w-px-* {
   width: --value(integer)px;
-}
-
-.ScrollAreaRoot {
-  --scrollbar-size: 10px;
-  @apply w-full h-full overflow-hidden;
-}
-
-.ScrollAreaViewport {
-  @apply w-full h-full border-inherit;
-}
-
-.ScrollAreaScrollbar {
-  @apply flex select-none touch-none p-0.5 rounded-md transition-colors duration-150 ease-out hover:bg-neutral-300;
-
-  &[data-orientation='vertical'] {
-    @apply w-2.5;
-  }
-
-  &[data-orientation='horizontal'] {
-    @apply h-2.5 flex-col;
-  }
-}
-
-.ScrollAreaThumb {
-  @apply flex-1 bg-neutral-600 relative rounded-md;
-}
-/* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
-.ScrollAreaThumb::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  min-width: 44px;
-  min-height: 44px;
 }

@@ -2,24 +2,24 @@ import { ScrollArea } from 'radix-ui';
 
 const Scrollable = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
-    <ScrollArea.Root type='auto' className="ScrollAreaRoot">
-      <ScrollArea.Viewport className="ScrollAreaViewport">
+    <ScrollArea.Root type="hover" className="scroll-root">
+      <ScrollArea.Viewport className="scroll-viewport">
         {children}
       </ScrollArea.Viewport>
       <ScrollArea.Scrollbar
-        className="ScrollAreaScrollbar"
+        className="scroll-bar"
         orientation="vertical"
         forceMount={true}
       >
-        <ScrollArea.Thumb className="ScrollAreaThumb" />
+        <ScrollArea.Thumb className="scroll-thumb" />
       </ScrollArea.Scrollbar>
       <ScrollArea.Scrollbar
-        className="ScrollAreaScrollbar"
+        className="scroll-bar"
         orientation="horizontal"
       >
-        <ScrollArea.Thumb className="ScrollAreaThumb" />
+        <ScrollArea.Thumb className="scroll-thumb" />
       </ScrollArea.Scrollbar>
-      <ScrollArea.Corner className="ScrollAreaCorner" />
+      <ScrollArea.Corner />
     </ScrollArea.Root>
   );
 };
