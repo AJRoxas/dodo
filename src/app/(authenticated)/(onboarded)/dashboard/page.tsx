@@ -2,6 +2,7 @@ import Button from '@/components/Button';
 import CourseCard from '@/components/dashboard/CourseCard';
 import DashboardHeading from '@/components/dashboard/DashboardHeading';
 import DialogModal from '@/components/DialogModal';
+import FormSwitch from '@/components/forms/FormSwitch';
 import Scrollable from '@/components/Scrollable';
 import { retrieveDecodedTokens } from '@/lib/auth/token';
 import { getCachedUserDashboardData } from '@/lib/prisma/queries/users';
@@ -46,7 +47,7 @@ const DashboardPage = async () => {
                 Add Course
               </Button>
             }
-            body={<div></div>}
+            body={<FormSwitch/>}
           />
         </div>
         <Scrollable>
