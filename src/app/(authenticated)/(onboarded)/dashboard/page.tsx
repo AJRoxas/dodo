@@ -1,6 +1,7 @@
 import Button from '@/components/Button';
 import CourseCard from '@/components/dashboard/CourseCard';
 import DashboardHeading from '@/components/dashboard/DashboardHeading';
+import DialogModal from '@/components/DialogModal';
 import Scrollable from '@/components/Scrollable';
 import { retrieveDecodedTokens } from '@/lib/auth/token';
 import { getCachedUserDashboardData } from '@/lib/prisma/queries/users';
@@ -37,14 +38,21 @@ const DashboardPage = async () => {
               Credits: {credits.toFixed(2)} of {required_credits.toFixed(2)}
             </span>
           </div>
-          <Button size="sm" isHalved={true} icon={faPlus}>
-            Add Course
-          </Button>
+          <DialogModal
+            title="Add a Course"
+            actionLabel='Add Course'
+            trigger={
+              <Button size="sm" isHalved={true} icon={faPlus}>
+                Add Course
+              </Button>
+            }
+            body={<div></div>}
+          />
         </div>
         <Scrollable>
           <div className="flex gap-4 flex-wrap justify-center md:justify-start content-start p-0 md:p-1 motion-safe:animate-fade-up">
             {courses.map((course: CourseWithStats) => {
-              return <CourseCard key={course.id} course={course} />
+              return <CourseCard key={course.id} course={course} />;
             })}
           </div>
         </Scrollable>

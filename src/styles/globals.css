@@ -27,7 +27,7 @@
       opacity: 0;
       transform: translateX(var(--viewport-padding));
     }
-    75% {
+    25% {
       opacity: 0.2;
     }
     100% {
@@ -176,8 +176,27 @@
     @apply flex-1 bg-primary relative rounded-md;
     /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
     &::before {
-      @apply content-[''] absolute top-[50%] left-[50%] translate-[-50%,-50%] w-full h-full min-w-11 min-h-11;
+      @apply content-[''] absolute top-[50%] left-[50%] translate-[-50%] w-full h-full min-w-11 min-h-11;
     }
+  }
+}
+
+/*Dialog*/
+@layer components {
+  .dialog-overlay {
+    @apply fixed inset-0 bg-dark opacity-60 z-20;
+  }
+  
+  .dialog-content {
+    @apply fixed translate-[-50%] top-[50%] left-[50%] w-85 md:w-185 px-5 py-10 rounded-2xl bg-light z-20 motion-safe:animate-fade-up;
+  
+    &:focus {
+      outline: none;
+    }
+  }
+  
+  .dialog-dismiss {
+    @apply fixed top-5 right-5
   }
 }
 

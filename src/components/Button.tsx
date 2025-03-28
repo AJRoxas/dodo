@@ -9,6 +9,7 @@ interface ButtonProps {
   ariaLabel?: string;
   isHalved?: boolean;
   isSubmit?: boolean;
+  form?: string;
   onClick?: React.MouseEventHandler;
   size?: string;
   customStyles?: string;
@@ -22,6 +23,7 @@ const Button = ({
   onClick,
   size = '',
   isSubmit = false,
+  form,
   customStyles,
 }: ButtonProps) => {
   const btnSize =
@@ -43,6 +45,7 @@ const Button = ({
 
   return (
     <button
+      form={form}
       type={isSubmit ? 'submit' : undefined}
       className={style}
       onClick={onClick}

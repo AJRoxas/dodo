@@ -29,7 +29,7 @@ const CourseAssessmentCard = ({
       <div>
         <div className="w-full flex items-center justify-between">
           <Element
-            className="font-semibold text-xl w-36 whitespace-nowrap overflow-hidden text-ellipsis"
+            className={`font-semibold text-xl w-36 whitespace-nowrap overflow-hidden text-ellipsis ${isAssessment ? undefined : 'hover:underline'}`}
             href={isAssessment ? undefined : '/'}
           >
             {label}
