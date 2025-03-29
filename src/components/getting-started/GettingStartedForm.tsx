@@ -2,14 +2,14 @@
 
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
-import GpaScale from '@/components/forms/templates/GpaScale';
+import GpaScaleField from '@/components/forms/templates/GpaScaleField';
 import {
   validateAcademicGoals,
   validateGpaScaleInput,
   validateUserSettings,
 } from '@/lib/utils/validations';
 import { usersettings } from '@prisma/client';
-import AcademicGoals from '../forms/templates/AcademicGoals';
+import AcademicGoalsField from '../forms/templates/AcademicGoalsField';
 import { useToast } from '@/components/ToastWrapper';
 import { auth } from '@/lib/firebase/firebase';
 import { useRouter } from 'next/navigation';
@@ -96,8 +96,8 @@ const GettingStartedForm = () => {
             Answer the following questions to get started
           </div>
         </div>
-        <AcademicGoals />
-        <GpaScale />
+        <AcademicGoalsField />
+        <GpaScaleField />
         <Form.Submit asChild>
           <Button>Submit</Button>
         </Form.Submit>

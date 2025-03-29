@@ -1,6 +1,6 @@
 import { FormInput } from '@/components/forms/FormInput';
 
-const AcademicGoals = () => {
+const AcademicGoalsField = () => {
   return (
     <>
       <div className="flex flex-col gap-4">
@@ -59,4 +59,4 @@ const AcademicGoals = () => {
   );
 };
 
-export default AcademicGoals;
+export default AcademicGoalsField;

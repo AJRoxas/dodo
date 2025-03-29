@@ -1,8 +1,8 @@
 import Button from '@/components/Button';
+import AddCourseForm from '@/components/dashboard/AddCourseForm';
 import CourseCard from '@/components/dashboard/CourseCard';
 import DashboardHeading from '@/components/dashboard/DashboardHeading';
 import DialogModal from '@/components/DialogModal';
-import FormSwitch from '@/components/forms/FormSwitch';
 import Scrollable from '@/components/Scrollable';
 import { retrieveDecodedTokens } from '@/lib/auth/token';
 import { getCachedUserDashboardData } from '@/lib/prisma/queries/users';
@@ -41,13 +41,12 @@ const DashboardPage = async () => {
           </div>
           <DialogModal
             title="Add a Course"
-            actionLabel='Add Course'
             trigger={
               <Button size="sm" isHalved={true} icon={faPlus}>
                 Add Course
               </Button>
             }
-            body={<FormSwitch/>}
+            body={<AddCourseForm />}
           />
         </div>
         <Scrollable>

@@ -41,7 +41,9 @@ const Button = ({
   // This allows 2 to exist with gap-2 on the smallest screen
   const btnWidth = size === 'fas' ? 'min-w-6' : isHalved ? 'w-36' : 'w-75';
 
-  const style = `${btnSize} ${btnWidth} ${color} cursor-pointer ${customStyles}`;
+  const style = `${btnSize} ${btnWidth} ${color} cursor-pointer ${
+    customStyles ?? ''
+  }`;
 
   return (
     <button

@@ -38,7 +38,7 @@ interface GpaScaleProps {
   initScale?: GpaScaleEntry[];
 }
 
-const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
+const GpaScaleField = ({ initScale = defaultScale }: GpaScaleProps) => {
   const [scale, setScale] = useState<GpaScaleEntry[]>(initScale);
 
   // To be used in the future
@@ -206,4 +206,4 @@ const GpaScale = ({ initScale = defaultScale }: GpaScaleProps) => {
   );
 };
 
-export default GpaScale;
+export default GpaScaleField;
