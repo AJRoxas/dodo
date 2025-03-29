@@ -3,7 +3,7 @@
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
 import { useDialogModal } from '@/components/DialogModal';
-import CourseField from '@/components/forms/templates/CourseField';
+import CourseField from '@/components/forms/fields/CourseField';
 
 const AddCourseForm = () => {
   const {setDialogModal} = useDialogModal();
