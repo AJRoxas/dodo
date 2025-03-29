@@ -3,6 +3,7 @@
 import { InputValidation } from '@@/types';
 import { Form } from 'radix-ui';
 import { useEffect, useState } from 'react';
+import FormWrapper from '@/components/forms/FormWrapper';
 
 interface InputProps {
   name: string;
@@ -24,45 +25,9 @@ interface InputProps {
   // Formatting
   hasValidation?: boolean;
   hasMessages?: boolean;
-  hasLabel?: boolean;
   customStyles?: string;
   customOnChange?: React.ChangeEventHandler<HTMLElement>;
 }
-
-interface FormInputWrapperProps {
-  name: string;
-  label: string;
-  children: React.ReactNode;
-  validations: InputValidation[];
-
-  hasLabel: boolean;
-}
-
-const FormInputWrapper = ({
-  name,
-  label,
-  children,
-  validations = [],
-  hasLabel,
-}: FormInputWrapperProps) => (
-  <Form.Field name={name}>
-    <div className="flex items-baseline justify-between">
-      {hasLabel ? (
-        <Form.Label className="text-sm font-semibold">{label}</Form.Label>
-      ) : undefined}
-      {validations.map(({ validation, message }) => (
-        <Form.Message
-          key={validation}
-          className="form-message"
-          match={validation}
-        >
-          {message}
-        </Form.Message>
-      ))}
-    </div>
-    <Form.Control asChild>{children}</Form.Control>
-  </Form.Field>
-);
 
 export const FormInput = ({
   name,
@@ -78,7 +43,6 @@ export const FormInput = ({
   step = 'any',
   hasValidation = true,
   hasMessages = true,
-  hasLabel = true,
   customStyles = '',
   customOnChange = undefined,
 }: InputProps) => {
@@ -136,6 +100,10 @@ export const FormInput = ({
         });
       }
     } else if (type === 'text') {
+      validations.push({
+        validation: 'valueMissing',
+        message: hasMessages ? 'Enter text' : '',
+      });
       if (minLen !== undefined) {
         validations.push({
           validation: 'tooShort',
@@ -152,11 +120,10 @@ export const FormInput = ({
   }
 
   return (
-    <FormInputWrapper
+    <FormWrapper
       name={name}
       label={label}
       validations={validations}
-      hasLabel={hasLabel}
     >
       <input
         className={`form-input ${customStyles}`}
@@ -171,6 +138,6 @@ export const FormInput = ({
         step={step}
         onChange={handleChange}
       />
-    </FormInputWrapper>
+    </FormWrapper>
   );
 };
