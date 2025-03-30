@@ -4,6 +4,7 @@ import { Form } from 'radix-ui';
 import SelectDropdown from '../SelectDropdown';
 import { useRef, useState } from 'react';
 
+// NEXT: allow inputs for dropdown values
 // Select does not have it's own validity state, as Radix primitives does not
 // have the functionality developed.
 // As such, we will use useState to deal with tit
