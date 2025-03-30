@@ -252,7 +252,7 @@
 /* Switch */
 @layer components {
   .switch-root {
-    @apply relative h-px-25 w-px-42 bg-off rounded-4xl hover:cursor-pointer;
+    @apply relative h-px-25 w-px-42 bg-off rounded-4xl hover:cursor-pointer translate-y-[5.5px];
   
     &[data-state="checked"] {
       @apply bg-primary;
