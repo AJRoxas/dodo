@@ -7,7 +7,6 @@ import CourseField from '@/components/forms/fields/CourseField';
 
 const AddCourseForm = () => {
   const {setDialogModal} = useDialogModal();
-
   const submitTest = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();

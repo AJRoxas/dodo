@@ -4,6 +4,7 @@ import { Form } from "radix-ui";
 interface FormInputWrapperProps {
   name: string;
   label?: string;
+  type?: string;
   children: React.ReactNode;
   validations: InputValidation[];
   customStyles?: string;
@@ -12,6 +13,7 @@ interface FormInputWrapperProps {
 const FormWrapper = ({
   name,
   label,
+  type = 'input',
   children,
   validations = [],
   customStyles,
@@ -31,7 +33,7 @@ const FormWrapper = ({
         </Form.Message>
       ))}
     </div>
-    <Form.Control asChild>{children}</Form.Control>
+    <Form.Control type={type} asChild>{children}</Form.Control>
   </Form.Field>
 );
 

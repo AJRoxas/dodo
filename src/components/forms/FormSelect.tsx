@@ -1,36 +1,66 @@
 'use client';
 
 import { Form } from 'radix-ui';
-import { useState } from 'react';
+import SelectDropdown from '../SelectDropdown';
+import { useRef, useState } from 'react';
 
-// Not working, need to consider adding the radix select component
+// Select does not have it's own validity state, as Radix primitives does not
+// have the functionality developed.
+// As such, we will use useState to deal with tit
 const FormSelect = () => {
   const [value, setValue] = useState('');
+  const name = 'starting_sem';
+  
+  const inputRef = useRef<HTMLInputElement>(null);
+  // Ref to focus on trigger when text is invalid
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target)
-    setValue(event.target.value);
+  const handleSelectChange = (value: string) => {
+    if (inputRef.current) {
+      inputRef.current.value = value;
+      inputRef.current.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    setValue(value);
+  };
 
-    // if (customOnChange !== undefined) customOnChange(event);
+  const handleInvalid = (event: React.InvalidEvent<HTMLInputElement>) => {
+    // Get the form element
+    const form = event.currentTarget.closest('form');
+    if (!form) return;
+
+    // Find the first invalid input
+    const firstInvalidElement = form.querySelector(':invalid') as HTMLElement;
+
+    // If this input is the first invalid element, focus the SelectDropdown
+    if (firstInvalidElement === inputRef.current && triggerRef.current) {
+      triggerRef.current.focus();
+    }
   };
 
   return (
-    <Form.Field name="cars">
+    <Form.Field name={name}>
       <div className="flex items-baseline justify-between">
         <Form.Label className="text-sm font-semibold">
           Starting Semester
         </Form.Label>
+        <Form.Message className="form-message" match="valueMissing">
+          This is required
+        </Form.Message>
       </div>
+      <SelectDropdown
+        value={value}
+        onChange={handleSelectChange}
+        triggerRef={triggerRef}
+      ></SelectDropdown>
       <Form.Control asChild>
-        <select value={value} className="form-input" onChange={handleChange}>
-          <option value="" disabled>
-            Choose a semester...
-          </option>
-          <option value="1">Fall</option>
-          <option value="2">Winter</option>
-          <option value="3">Summer</option>
-          <option value="4">Spring</option>
-        </select>
+        <input
+          ref={inputRef}
+          type="text"
+          className="!hidden"
+          required
+          value={value}
+          onInvalid={handleInvalid}
+        ></input>
       </Form.Control>
     </Form.Field>
   );

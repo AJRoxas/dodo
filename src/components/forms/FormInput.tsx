@@ -7,7 +7,7 @@ import FormWrapper from '@/components/forms/FormWrapper';
 
 interface InputProps {
   name: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   required?: boolean;
   value?: string | number;
@@ -71,22 +71,20 @@ export const FormInput = ({
   const validations: InputValidation[] = [];
 
   if (hasValidation) {
-    if (type === 'email') {
+    if (required) {
       validations.push(
         {
           validation: 'valueMissing',
-          message: hasMessages ? 'Enter your email' : '',
-        },
-        {
-          validation: 'typeMismatch',
-          message: hasMessages ? 'Provide a valid email' : '',
+          message: hasMessages ? 'This is required' : '',
         }
       );
-    } else if (type === 'number') {
+    }
+    if (type === 'email') {
       validations.push({
-        validation: 'valueMissing',
-        message: hasMessages ? 'Enter a number' : '',
+        validation: 'typeMismatch',
+        message: hasMessages ? 'Provide a valid email' : '',
       });
+    } else if (type === 'number') {
       if (min !== undefined) {
         validations.push({
           validation: 'rangeUnderflow',
@@ -100,10 +98,6 @@ export const FormInput = ({
         });
       }
     } else if (type === 'text') {
-      validations.push({
-        validation: 'valueMissing',
-        message: hasMessages ? 'Enter text' : '',
-      });
       if (minLen !== undefined) {
         validations.push({
           validation: 'tooShort',
@@ -120,11 +114,7 @@ export const FormInput = ({
   }
 
   return (
-    <FormWrapper
-      name={name}
-      label={label}
-      validations={validations}
-    >
+    <FormWrapper name={name} label={label} validations={validations}>
       <input
         className={`form-input ${customStyles}`}
         type={type}

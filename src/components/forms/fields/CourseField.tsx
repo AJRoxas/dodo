@@ -21,7 +21,7 @@ const CourseField = () => {
         type="number"
         placeholder="0.5"
         step="0.01"
-      ></FormInput>
+      />
       <FormInput
         name="goal_grade"
         label="Goal Grade"
@@ -30,7 +30,7 @@ const CourseField = () => {
         type="number"
         placeholder="100"
         step="1"
-      ></FormInput>
+      />
       <FormSwitch name="is_pass_fail" label="Is a pass/fail course?" />
       <FormSelect/>
       <FormInput
@@ -42,7 +42,7 @@ const CourseField = () => {
         type="number"
         placeholder={new Date().getFullYear().toString()}
         step="1"
-      ></FormInput>
+      />
     </div>
   );
 };
