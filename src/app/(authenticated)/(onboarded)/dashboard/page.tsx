@@ -5,6 +5,7 @@ import DashboardHeading from '@/components/dashboard/DashboardHeading';
 import DialogModal from '@/components/DialogModal';
 import Scrollable from '@/components/Scrollable';
 import { retrieveDecodedTokens } from '@/lib/auth/token';
+import { getCachedTags } from '@/lib/prisma/queries/tags';
 import { getCachedUserDashboardData } from '@/lib/prisma/queries/users';
 import { CourseWithStats } from '@@/types';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -16,10 +17,10 @@ const DashboardPage = async () => {
   if (!user) return notFound();
 
   const dashboardData = await getCachedUserDashboardData(user.uid);
-
   const { cGpa, credits, courses } = dashboardData;
-
   const { required_credits, final_gpa_goal } = dashboardData.usersettings;
+
+  const tags = await getCachedTags();
 
   return (
     <main className="flex flex-col md:flex-row justify-between items-center">
@@ -46,7 +47,7 @@ const DashboardPage = async () => {
                 Add Course
               </Button>
             }
-            body={<AddCourseForm />}
+            body={<AddCourseForm tags={tags} />}
           />
         </div>
         <Scrollable>

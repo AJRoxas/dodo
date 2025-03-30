@@ -249,6 +249,25 @@
   }
 }
 
+/* Switch */
+@layer components {
+  .switch-root {
+    @apply relative h-px-25 w-px-42 bg-off rounded-4xl hover:cursor-pointer;
+  
+    &[data-state="checked"] {
+      @apply bg-primary;
+    }
+  }
+  
+  .switch-thumb {
+    @apply block w-px-21 h-px-21 bg-light rounded-4xl transform duration-200 translate-x-0.5 will-change-transform;
+    
+    &[data-state="checked"] {
+      @apply translate-x-4.75;
+    }
+  }
+}
+
 @utility bg-gradient-primary {
   @apply bg-linear-to-b from-primary to-secondary;
 }
@@ -283,21 +302,4 @@
 
 @utility w-px-* {
   width: --value(integer)px;
-}
-
-
-.switch-root {
-  @apply relative h-px-25 w-px-42 bg-off rounded-4xl;
-
-	&[data-state="checked"] {
-		@apply bg-primary;
-	}
-}
-
-.switch-thumb {
-  @apply block w-px-21 h-px-21 bg-light rounded-4xl transform duration-200 translate-x-0.5 will-change-transform;
-  
-	&[data-state="checked"] {
-		@apply translate-x-4.75;
-	}
 }

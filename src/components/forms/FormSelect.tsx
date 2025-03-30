@@ -3,15 +3,26 @@
 import { Form } from 'radix-ui';
 import SelectDropdown from '../SelectDropdown';
 import { useRef, useState } from 'react';
+import { tags } from '@prisma/client';
 
-// NEXT: allow inputs for dropdown values
+interface FormSelectProps {
+  options: tags[];
+  placeholder?: string;
+  selected?: string;
+}
+
 // Select does not have it's own validity state, as Radix primitives does not
 // have the functionality developed.
 // As such, we will use useState to deal with tit
-const FormSelect = () => {
-  const [value, setValue] = useState('');
+const FormSelect = ({
+  options,
+  placeholder,
+  selected,
+}: Readonly<FormSelectProps>) => {
+  const [value, setValue] = useState(selected ?? '');
   const name = 'starting_sem';
-  
+
+
   const inputRef = useRef<HTMLInputElement>(null);
   // Ref to focus on trigger when text is invalid
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -49,9 +60,11 @@ const FormSelect = () => {
         </Form.Message>
       </div>
       <SelectDropdown
-        value={value}
+        selected={value}
         onChange={handleSelectChange}
         triggerRef={triggerRef}
+        options={options}
+        placeholder={placeholder}
       ></SelectDropdown>
       <Form.Control asChild>
         <input

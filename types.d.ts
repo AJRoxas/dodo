@@ -14,7 +14,6 @@
 
 import { assessments, courses, coursetags } from "@prisma/client";
 
-//
 export type InputValidation = {
   validation: ValidityMatcher | CustomMatcher;
   message: string;

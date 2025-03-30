@@ -1,11 +1,14 @@
+'use client';
+
 import {
   faCheck,
   faChevronDown,
   faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { tags } from '@prisma/client';
 import { Select } from 'radix-ui';
-import React, { RefObject } from 'react';
+import React, { RefObject, useState } from 'react';
 
 interface SelectItemProps
   extends Omit<React.ComponentProps<typeof Select.Item>, 'value' | 'children'> {
@@ -33,24 +36,34 @@ const SelectItem = ({
 };
 
 interface SelectDropdownProps {
-  value: string;
+  selected: string;
   onChange: (value: string) => void;
   triggerRef?: RefObject<HTMLButtonElement | null>;
+  options: tags[];
+  placeholder?: string;
 }
 
 const SelectDropdown = ({
-  value = '',
+  selected = '',
   onChange,
   triggerRef,
+  options,
+  placeholder,
 }: Readonly<SelectDropdownProps>) => {
+  const [value, setValue] = useState(selected ?? '');
+
+  const changeHandler = (value: string) => {
+    setValue(value);
+    onChange(value);
+  }
   return (
-    <Select.Root value={value} onValueChange={onChange}>
+    <Select.Root value={value} onValueChange={changeHandler}>
       <Select.Trigger
         className="form-select"
         aria-label="Food"
         ref={triggerRef}
       >
-        <Select.Value placeholder="Select a fruit…" />
+        <Select.Value placeholder={placeholder ?? 'Select'} />
         <Select.Icon>
           <FontAwesomeIcon
             icon={faChevronDown}
@@ -69,37 +82,13 @@ const SelectDropdown = ({
             />
           </Select.ScrollUpButton>
           <Select.Viewport className="select-viewport">
-            <Select.Group>
-              <Select.Label className="select-label">Fruits</Select.Label>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
-            </Select.Group>
-
-            <Select.Separator className="select-separator" />
-
-            <Select.Group>
-              <Select.Label className="select-label">Vegetables</Select.Label>
-              <SelectItem value="aubergine">Aubergine</SelectItem>
-              <SelectItem value="broccoli">Broccoli</SelectItem>
-              <SelectItem value="carrot" disabled>
-                Carrot
-              </SelectItem>
-              <SelectItem value="courgette">Courgette</SelectItem>
-              <SelectItem value="leek">Leek</SelectItem>
-            </Select.Group>
-
-            <Select.Separator className="select-separator" />
-
-            <Select.Group>
-              <Select.Label className="select-label">Meat</Select.Label>
-              <SelectItem value="beef">Beef</SelectItem>
-              <SelectItem value="chicken">Chicken</SelectItem>
-              <SelectItem value="lamb">Lamb</SelectItem>
-              <SelectItem value="pork">Pork</SelectItem>
-            </Select.Group>
+            {options.map((option) => {
+              return (
+                <SelectItem key={option.id} value={option.id.toString()}>
+                  {option.name}
+                </SelectItem>
+              );
+            })}
           </Select.Viewport>
 
           <Select.ScrollDownButton className="select-scroll-button">
