@@ -2,8 +2,12 @@
 @import 'tailwindcss-animated';
 
 @theme {
+  --breakpoint-xs: 25rem;
+
   --color-light: #ffffff;
   --color-dark: #0a0a0a;
+  --color-off: #999;
+  --color-highlight: #ddd;
   --color-primary: #8031a7;
   --color-secondary: #407ec9;
   --color-success: #00b08b;
@@ -11,6 +15,7 @@
   --color-error: #f9423a;
   --color-error-light: #fdb3b0;
 
+  --shadow-card: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
   /* Toast Wrapper */
   --viewport-padding: 32px;
@@ -23,7 +28,7 @@
       opacity: 0;
       transform: translateX(var(--viewport-padding));
     }
-    75% {
+    25% {
       opacity: 0.2;
     }
     100% {
@@ -80,21 +85,76 @@
 
 @layer components {
   .container-col {
-    @apply flex flex-col justify-center items-center gap-8 p-10 sm:p-20 w-full min-h-full;
+    @apply flex flex-col justify-center items-center gap-8 p-8 py-10 sm:p-20 w-full min-h-full;
+  }
+
+  .container-dashboard {
+    @apply flex flex-col items-center gap-8 p-8 py-10 w-full min-h-full justify-start md:h-[calc(100vh_-_64px)];
   }
 
   .form-message {
     @apply text-error text-xs font-semibold;
   }
 
-  .form-input {
+  .form-input,
+  .form-select {
     @apply w-75 px-2 py-1.5 ring-1 ring-primary rounded-sm hover:ring-2 focus:ring-2 outline-0;
   }
 
+  .form-select {
+    @apply flex justify-between items-center hover:cursor-pointer;
+    
+    &[data-placeholder]{
+      @apply text-neutral-400
+    }
+  }
+
+  .select-content {
+    @apply z-30 overflow-hidden bg-light rounded-sm shadow-card;
+
+  }
+
+  .select-viewport {
+    @apply p-2;
+  }
+
+  .select-item {
+    @apply rounded-sm flex items-center h-9 px-2 relative select-none;
+
+    &[data-disabled] {
+      @apply text-off pointer-events-none;
+    }
+    &[data-highlighted] {
+      @apply text-light bg-primary cursor-pointer;
+    }
+    &[data-highlighted] svg {
+      @apply !fill-light;
+    }
+  }
+
+  .select-label {
+    @apply px-2 font-semibold text-sm text-primary;
+  }
+
+  .select-separator {
+    @apply h-px bg-primary m-2;
+  }
+
+  .select-item-indicator {
+    @apply absolute right-2 flex items-center justify-center;
+  }
+
+  .select-scroll-button {
+    @apply flex items-center justify-center h-px-25 bg-light cursor-default;
+  }
+  
   .gpa-cell {
     @apply min-w-20 max-w-48 w-full;
   }
+}
 
+/*Toast*/
+@layer components {
   .toast-viewport {
     @apply p-8 fixed top-0 right-0 flex flex-col gap-2 w-91 sm:w-116 z-2147483647 outline-none;
   }
@@ -103,10 +163,10 @@
     @apply p-4 bg-light rounded-md shadow-md grid grid-cols-[auto_max-content] items-center;
 
     &.error {
-      @apply bg-error-light
+      @apply bg-error-light;
     }
     &.success {
-      @apply bg-success-light
+      @apply bg-success-light;
     }
     &[data-state='open'] {
       @apply animate-toast-open;
@@ -135,6 +195,76 @@
 
   .toast-action {
     @apply order-3 col-start-2 row-start-1 row-span-2;
+  }
+}
+
+/*Scrollbar*/
+@layer components {
+  .scroll-root {
+    --scrollbar-size: 10px;
+    @apply w-full h-full overflow-hidden;
+  }
+  
+  .scroll-viewport {
+    @apply w-full h-full border-inherit;
+  }
+  
+  .scroll-bar {
+    @apply flex select-none touch-none p-0.5 rounded-md transition-colors duration-150 ease-out hover:bg-highlight;
+  
+    &[data-orientation='vertical'] {
+      @apply w-2.5;
+    }
+  
+    &[data-orientation='horizontal'] {
+      @apply h-2.5 flex-col;
+    }
+  }
+  
+  .scroll-thumb {
+    @apply flex-1 bg-primary relative rounded-md;
+    /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
+    &::before {
+      @apply content-[''] absolute top-[50%] left-[50%] translate-[-50%] w-full h-full min-w-11 min-h-11;
+    }
+  }
+}
+
+/*Dialog*/
+@layer components {
+  .dialog-overlay {
+    @apply fixed inset-0 bg-dark opacity-60 z-20;
+  }
+  
+  .dialog-content {
+    @apply fixed translate-[-50%] top-[50%] left-[50%] w-85 md:w-185 px-5 py-10 rounded-2xl bg-light z-20 motion-safe:animate-fade-up;
+  
+    &:focus {
+      outline: none;
+    }
+  }
+  
+  .dialog-dismiss {
+    @apply fixed top-5 right-5
+  }
+}
+
+/* Switch */
+@layer components {
+  .switch-root {
+    @apply relative h-px-25 w-px-42 bg-off rounded-4xl hover:cursor-pointer translate-y-[5.5px];
+  
+    &[data-state="checked"] {
+      @apply bg-primary;
+    }
+  }
+  
+  .switch-thumb {
+    @apply block w-px-21 h-px-21 bg-light rounded-4xl transform duration-200 translate-x-0.5 will-change-transform;
+    
+    &[data-state="checked"] {
+      @apply translate-x-4.75;
+    }
   }
 }
 

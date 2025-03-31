@@ -34,7 +34,6 @@ const GpaScaleRow = ({
         type="text"
         placeholder="A+"
         hasMessages={false}
-        hasLabel={false}
         customStyles="gpa-cell"
         customOnChange={changeLetter}
       ></FormInput>
@@ -47,7 +46,6 @@ const GpaScaleRow = ({
         type="number"
         placeholder="4.0"
         hasMessages={false}
-        hasLabel={false}
         customStyles="gpa-cell"
         customOnChange={changeGpa}
       ></FormInput>
@@ -60,7 +58,6 @@ const GpaScaleRow = ({
         type="number"
         placeholder="100"
         hasMessages={false}
-        hasLabel={false}
         customStyles="gpa-cell"
         customOnChange={changeGrade}
       ></FormInput>

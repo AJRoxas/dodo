@@ -1,9 +1,12 @@
 import { GpaScaleEntry } from '@@/types';
-import { usersettings } from '@prisma/client';
+import { courses, usersettings } from '@prisma/client';
 import { z } from 'zod';
 
-// UseSettings inputs, GpaScales grade and gpa input
 const nonnegativeInput = z.number().nonnegative().safe();
+const requiredString = z.string().trim().min(1);
+
+//#region  Getting Started
+
 // GpaScales letter input
 const gpaLetter = z.string().trim().min(1).max(3);
 
@@ -36,7 +39,7 @@ export const validateAcademicGoals = ({
 };
 
 export const validateGpaScaleLetters = (gpaScale: GpaScaleEntry[]) => {
-  let result = gpaScale.every((everyEntry, i, scale) => {
+  const result = gpaScale.every((everyEntry, i, scale) => {
     return (
       gpaLetter.safeParse(everyEntry.letter).success &&
       scale.findIndex((findEntry) => findEntry.letter == everyEntry.letter) == i
@@ -47,7 +50,7 @@ export const validateGpaScaleLetters = (gpaScale: GpaScaleEntry[]) => {
 };
 
 export const validateGpaScaleGpas = (gpaScale: GpaScaleEntry[]) => {
-  let result = gpaScale.every((everyEntry) => {
+  const result = gpaScale.every((everyEntry) => {
     return nonnegativeInput.safeParse(everyEntry.gpa).success;
   });
 
@@ -55,7 +58,7 @@ export const validateGpaScaleGpas = (gpaScale: GpaScaleEntry[]) => {
 };
 
 export const validateGpaScaleGrades = (gpaScale: GpaScaleEntry[]) => {
-  let result = gpaScale.every((everyEntry, i, scale) => {
+  const result = gpaScale.every((everyEntry, i, scale) => {
     return (
       nonnegativeInput.safeParse(everyEntry.grade).success &&
       scale.findIndex((findEntry) => findEntry.grade == everyEntry.grade) == i
@@ -66,14 +69,14 @@ export const validateGpaScaleGrades = (gpaScale: GpaScaleEntry[]) => {
 };
 
 export const validateGpaScaleHasFailingGrade = (gpaScale: GpaScaleEntry[]) => {
-  let result = gpaScale.findIndex((findEntry) => findEntry.grade == 0) > 0;
+  const result = gpaScale.findIndex((findEntry) => findEntry.grade == 0) > 0;
 
   return result;
 };
 
 // Validates the input fields only
 export const validateGpaScaleInput = (gpaScale: GpaScaleEntry[]) => {
-  let result = gpaScale.every((everyEntry) => {
+  const result = gpaScale.every((everyEntry) => {
     return gpaGrade.safeParse({
       letter: everyEntry.letter,
       gpa: everyEntry.gpa,
@@ -85,7 +88,7 @@ export const validateGpaScaleInput = (gpaScale: GpaScaleEntry[]) => {
 };
 
 export const validateGpaScale = (gpaScale: GpaScaleEntry[]) => {
-  let result =
+  const result =
     gpaScale.every((everyEntry, i, scale) => {
       return (
         gpaGrade.safeParse({
@@ -122,3 +125,35 @@ export const validateUserSettings = (
     } as usersettings) && validateGpaScale(gpaScale)
   );
 };
+
+//#endregion
+
+//#region Courses
+
+const course = z.object({
+  course_code: requiredString.max(28),
+  weight: nonnegativeInput,
+  goal_grade: nonnegativeInput,
+  is_pass_fail: z.boolean(),
+  year: nonnegativeInput.min(1900).max(2999),
+});
+
+export const validateCourse = ({
+  course_code,
+  weight,
+  goal_grade,
+  is_pass_fail,
+  year,
+}: courses) => {
+  const result = course.safeParse({
+    year,
+    course_code,
+    weight,
+    goal_grade,
+    is_pass_fail,
+  });
+
+  return result.success;
+};
+
+//#endregion

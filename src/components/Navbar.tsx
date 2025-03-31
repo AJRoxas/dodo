@@ -17,7 +17,7 @@ const NavBar = ({ isAuthenticated, isOnboarded = false }: NavBarProps) => {
   const SignInLink = () => {
     return (
       <>
-        <Link href="/sign-in">Sign in</Link>
+        <Link href="/sign-in" className='hover:underline'>Sign in</Link>
       </>
     );
   };
@@ -27,6 +27,7 @@ const NavBar = ({ isAuthenticated, isOnboarded = false }: NavBarProps) => {
       <>
         <Link
           href="#"
+          className='hover:underline'
           onClick={async (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.preventDefault()
             if (await signOutUser()) router.push('/sign-in');
@@ -43,6 +44,7 @@ const NavBar = ({ isAuthenticated, isOnboarded = false }: NavBarProps) => {
       <>
         <Link
           href="#"
+          className='hover:underline'
           onClick={async (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.preventDefault()
             if (await signOutUser()) router.push('/sign-in');

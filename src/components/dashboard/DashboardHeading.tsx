@@ -16,8 +16,8 @@ const DashboardHeading = ({
   return (
     <>
       <div className="font-semibold text-3xl">Dashboard</div>
-      <div>
-        <div className="flex justify-between items-center w-75">
+      <div className="w-75">
+        <div className="flex justify-between items-center">
           <div className="font-semibold text-2xl">GPA {cGpa.toFixed(2)}</div>
           <div className="font-semibold text-2xl">
             Goal {finalGpaGoal.toFixed(2)}

@@ -88,7 +88,7 @@ export const getCachedUserDashboardData = (uid: string) => {
             user.usersettings!.initial_credits
           : user.usersettings!.initial_credits;
 
-        const cGpa = user.courses.length
+        const cGpa = user.courses.length && credits
           ? (user.courses
               .filter((course) => (course as CourseWithStats).progress == 100)
               .reduce(

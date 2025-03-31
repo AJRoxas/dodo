@@ -3,10 +3,11 @@
 import { InputValidation } from '@@/types';
 import { Form } from 'radix-ui';
 import { useEffect, useState } from 'react';
+import FormWrapper from '@/components/forms/FormWrapper';
 
 interface InputProps {
   name: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   required?: boolean;
   value?: string | number;
@@ -24,45 +25,9 @@ interface InputProps {
   // Formatting
   hasValidation?: boolean;
   hasMessages?: boolean;
-  hasLabel?: boolean;
   customStyles?: string;
   customOnChange?: React.ChangeEventHandler<HTMLElement>;
 }
-
-interface FormInputWrapperProps {
-  name: string;
-  label: string;
-  children: React.ReactNode;
-  validations: InputValidation[];
-
-  hasLabel: boolean;
-}
-
-const FormInputWrapper = ({
-  name,
-  label,
-  children,
-  validations = [],
-  hasLabel,
-}: FormInputWrapperProps) => (
-  <Form.Field name={name}>
-    <div className="flex items-baseline justify-between">
-      {hasLabel ? (
-        <Form.Label className="text-sm font-semibold">{label}</Form.Label>
-      ) : undefined}
-      {validations.map(({ validation, message }) => (
-        <Form.Message
-          key={validation}
-          className="form-message"
-          match={validation}
-        >
-          {message}
-        </Form.Message>
-      ))}
-    </div>
-    <Form.Control asChild>{children}</Form.Control>
-  </Form.Field>
-);
 
 export const FormInput = ({
   name,
@@ -78,7 +43,6 @@ export const FormInput = ({
   step = 'any',
   hasValidation = true,
   hasMessages = true,
-  hasLabel = true,
   customStyles = '',
   customOnChange = undefined,
 }: InputProps) => {
@@ -107,22 +71,20 @@ export const FormInput = ({
   const validations: InputValidation[] = [];
 
   if (hasValidation) {
-    if (type === 'email') {
+    if (required) {
       validations.push(
         {
           validation: 'valueMissing',
-          message: hasMessages ? 'Enter your email' : '',
-        },
-        {
-          validation: 'typeMismatch',
-          message: hasMessages ? 'Provide a valid email' : '',
+          message: hasMessages ? 'This is required' : '',
         }
       );
-    } else if (type === 'number') {
+    }
+    if (type === 'email') {
       validations.push({
-        validation: 'valueMissing',
-        message: hasMessages ? 'Enter a number' : '',
+        validation: 'typeMismatch',
+        message: hasMessages ? 'Provide a valid email' : '',
       });
+    } else if (type === 'number') {
       if (min !== undefined) {
         validations.push({
           validation: 'rangeUnderflow',
@@ -152,12 +114,7 @@ export const FormInput = ({
   }
 
   return (
-    <FormInputWrapper
-      name={name}
-      label={label}
-      validations={validations}
-      hasLabel={hasLabel}
-    >
+    <FormWrapper name={name} label={label} validations={validations}>
       <input
         className={`form-input ${customStyles}`}
         type={type}
@@ -171,6 +128,6 @@ export const FormInput = ({
         step={step}
         onChange={handleChange}
       />
-    </FormInputWrapper>
+    </FormWrapper>
   );
 };

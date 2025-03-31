@@ -17,7 +17,7 @@ export const prismaTryCatch = async (func: any) => {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       return { error: error.code };
     }
-
+    console.log(error)
     return null;
   }
 };
