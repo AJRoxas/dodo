@@ -6,7 +6,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { createContext, useContext, useState } from 'react';
 
-interface ShowToastProps {
+export interface ShowToastProps {
   title: string;
   description: string;
 

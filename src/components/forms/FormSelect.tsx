@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { tags } from '@prisma/client';
 
 interface FormSelectProps {
+  name: string
   options: tags[];
   placeholder?: string;
   selected?: string;
@@ -15,13 +16,12 @@ interface FormSelectProps {
 // have the functionality developed.
 // As such, we will use useState to deal with tit
 const FormSelect = ({
+  name,
   options,
   placeholder,
   selected,
 }: Readonly<FormSelectProps>) => {
   const [value, setValue] = useState(selected ?? '');
-  const name = 'starting_sem';
-
 
   const inputRef = useRef<HTMLInputElement>(null);
   // Ref to focus on trigger when text is invalid

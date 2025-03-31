@@ -51,7 +51,7 @@ const CourseField = ({
         label="Is a pass/fail course?"
         isChecked={course?.is_pass_fail}
       />
-      <FormSelect options={tags} placeholder={selectPlaceholder} />
+      <FormSelect name='tag' options={tags} placeholder={selectPlaceholder} />
       <FormInput
         name="year"
         label="Starting Year"

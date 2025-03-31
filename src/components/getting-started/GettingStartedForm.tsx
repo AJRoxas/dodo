@@ -14,6 +14,7 @@ import { useToast } from '@/components/ToastWrapper';
 import { auth } from '@/lib/firebase/firebase';
 import { useRouter } from 'next/navigation';
 import { gpaScaleSort } from '@/lib/utils/gpaScale';
+import { invalidFormMessage, serverErrorMessage, successGettingStartedMessage, unexpectedFormChangeMessage } from '@/lib/utils/toastMessages';
 
 const GettingStartedForm = () => {
   const router = useRouter();
@@ -38,17 +39,9 @@ const GettingStartedForm = () => {
         validateGpaScaleInput(gpaScale) &&
         validateAcademicGoals(academicGoals)
       ) {
-        showToast({
-          title: 'Invalid Form',
-          description: 'Please check your form and try again.',
-          type: 'error',
-        });
+        showToast(invalidFormMessage);
       } else {
-        showToast({
-          title: 'Unexpected Form Change Detected',
-          description: 'Try refreshing the page.',
-          type: 'error',
-        });
+        showToast(unexpectedFormChangeMessage);
       }
     } else {
       gpaScale.sort(gpaScaleSort);
@@ -69,20 +62,11 @@ const GettingStartedForm = () => {
       });
 
       if (response.ok) {
-        showToast({
-          title: 'Success',
-          description: 'Your settings have been saved!',
-          type: 'success',
-        });
+        showToast(successGettingStartedMessage);
 
         router.replace('/dashboard');
       } else {
-        showToast({
-          title: 'Server Error',
-          description:
-            'Your information was not saved, please refresh and try again.',
-          type: 'error',
-        });
+        showToast(serverErrorMessage);
       }
     }
   };

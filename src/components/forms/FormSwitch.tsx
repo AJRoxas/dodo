@@ -13,13 +13,14 @@ interface FormSwitchProps {
 
 const FormSwitch = ({ name, label, isChecked }: FormSwitchProps) => {
   const [checked, setChecked] = useState(isChecked);
-  
+
   return (
     <FormWrapper name={name} label={label} validations={[]} customStyles="w-75">
       <Switch.Root
         className="switch-root"
         checked={checked}
         onCheckedChange={setChecked}
+        type="button"
       >
         <Switch.Thumb className="switch-thumb" />
       </Switch.Root>

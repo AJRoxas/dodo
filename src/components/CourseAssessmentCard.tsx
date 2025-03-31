@@ -25,7 +25,7 @@ const CourseAssessmentCard = ({
   const Element = isAssessment ? 'div' : 'a';
 
   return (
-    <div className="w-75 h-32 p-2 flex flex-col gap-1 bg-light rounded-lg shadow-card">
+    <div className="w-75 h-32 p-2 flex flex-col gap-1 bg-light rounded-lg shadow-card motion-safe:animate-fade-up">
       <div>
         <div className="w-full flex items-center justify-between">
           <Element
