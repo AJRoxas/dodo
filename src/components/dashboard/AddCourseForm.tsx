@@ -74,6 +74,7 @@ const AddCourseForm = ({ tags }: Readonly<AddCourseFormProps>) => {
             serverErrorUniquenessMessage('Course name must be unique!')
           );
         } else {
+          console.log(error)
           showToast(serverErrorMessage);
         }
       }
