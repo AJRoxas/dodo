@@ -2,7 +2,7 @@
 
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
-import { useDialogModal } from '@/components/DialogModal';
+import { useDialog } from '@/components/DialogWrapper';
 import CourseField from '@/components/forms/fields/CourseField';
 import { courses, tags } from '@prisma/client';
 import { auth } from '@/lib/firebase/firebase';
@@ -22,7 +22,7 @@ interface AddCourseFormProps {
 
 const AddCourseForm = ({ tags }: Readonly<AddCourseFormProps>) => {
   const router = useRouter();
-  const { setDialogModal } = useDialogModal();
+  const { closeDialog } = useDialog();
   const { showToast } = useToast();
   const submitTest = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -71,7 +71,7 @@ const AddCourseForm = ({ tags }: Readonly<AddCourseFormProps>) => {
         const error = (await response.json()).error;
         if (error == 'P2002') {
           showToast(
-            serverErrorUniquenessMessage('Course name must be unique!')
+            serverErrorUniquenessMessage('Course code must be unique!')
           );
         } else {
           console.log(error)
@@ -80,7 +80,7 @@ const AddCourseForm = ({ tags }: Readonly<AddCourseFormProps>) => {
       }
     }
 
-    setDialogModal(false);
+    closeDialog();
   };
   return (
     <Form.Root onSubmit={submitTest} id="test">

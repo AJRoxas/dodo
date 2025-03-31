@@ -1,14 +1,11 @@
-import Button from '@/components/Button';
-import AddCourseForm from '@/components/dashboard/AddCourseForm';
+import AddCourseButton from '@/components/dashboard/AddCourseButton';
 import CourseCard from '@/components/dashboard/CourseCard';
 import DashboardHeading from '@/components/dashboard/DashboardHeading';
-import DialogModal from '@/components/DialogModal';
 import Scrollable from '@/components/Scrollable';
 import { retrieveDecodedTokens } from '@/lib/auth/token';
 import { getCachedTags } from '@/lib/prisma/queries/tags';
 import { getCachedUserDashboardData } from '@/lib/prisma/queries/users';
 import { CourseWithStats } from '@@/types';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
@@ -40,15 +37,7 @@ const DashboardPage = async () => {
               Credits: {credits.toFixed(2)} of {required_credits.toFixed(2)}
             </span>
           </div>
-          <DialogModal
-            title="Add a Course"
-            trigger={
-              <Button size="sm" isHalved={true} icon={faPlus}>
-                Add Course
-              </Button>
-            }
-            body={<AddCourseForm tags={tags} />}
-          />
+          <AddCourseButton tags={tags} />
         </div>
         <Scrollable>
           <div className="flex gap-4 flex-wrap justify-center md:justify-start content-start p-0 md:p-1 motion-safe:animate-fade-up">
