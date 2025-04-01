@@ -11,20 +11,31 @@ import {
   serverErrorMessage,
   serverErrorUniquenessMessage,
   successAddCourseMessage,
+  successUpdateCourseMessage,
   unexpectedFormChangeMessage,
 } from '@/lib/utils/toastMessages';
 import { validateCourse } from '@/lib/utils/validations';
 import { useRouter } from 'next/navigation';
 import { useTags } from '@/context/TagContext';
+import {
+  CourseWithAssessments,
+  CourseWithStats,
+  CourseWithTags,
+} from '@@/types';
 
-const AddCourseForm = () => {
+interface CourseFormProps {
+  mode: 'edit' | 'add';
+  course?: CourseWithTags | CourseWithAssessments | CourseWithStats;
+}
+
+const CourseForm = ({ mode, course }: CourseFormProps) => {
   const router = useRouter();
   const tags = useTags();
 
   const { closeDialog } = useDialog();
   const { showToast } = useToast();
 
-  const submitTest = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -32,7 +43,7 @@ const AddCourseForm = () => {
 
     const uid = auth.currentUser?.uid ?? '';
 
-    const course: courses = {
+    const formCourse: courses = {
       id: -1,
       user_id: uid,
       course_code: formData.course_code.toString().trim(),
@@ -47,25 +58,40 @@ const AddCourseForm = () => {
     };
 
     if (
-      !validateCourse(course) ||
+      !validateCourse(formCourse) ||
       !tags.find((tag) => tag.id === courseTag.tag_id)
     ) {
       showToast(unexpectedFormChangeMessage);
     } else {
-      const response = await fetch('/api/course', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...course,
-          coursetags: [courseTag],
-        }),
-      });
+      const response =
+        mode == 'edit'
+          ? await fetch('/api/course/' + Number(course!.id), {
+              method: 'PUT',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                ...formCourse,
+                coursetags: [courseTag],
+              }),
+            })
+          : await fetch('/api/course', {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                ...course,
+                coursetags: [courseTag],
+              }),
+            });
 
       if (response.ok) {
-        showToast(successAddCourseMessage);
+        showToast(
+          mode == 'edit' ? successUpdateCourseMessage : successAddCourseMessage
+        );
         router.refresh();
       } else {
         const error = (await response.json()).error;
@@ -83,13 +109,15 @@ const AddCourseForm = () => {
     closeDialog();
   };
   return (
-    <Form.Root onSubmit={submitTest} id="test">
-      <CourseField />
+    <Form.Root onSubmit={submitForm} id="test">
+      <CourseField course={course} />
       <Form.Submit asChild>
-        <Button>Add Course</Button>
+        <Button>
+          {mode == 'edit' ? `Update ${course?.course_code}` : 'Add Course'}
+        </Button>
       </Form.Submit>
     </Form.Root>
   );
 };
 
-export default AddCourseForm;
+export default CourseForm;

@@ -50,6 +50,11 @@ export const successAddCourseMessage: ShowToastProps = successMessage(
   'Your course was added successfully!'
 ); 
 
+// When course added successfully
+export const successUpdateCourseMessage: ShowToastProps = successMessage(
+  'Your course was updated successfully!'
+); 
+
 // When course deleted successfully
 export const successDeleteCourseMessage: ShowToastProps = successMessage(
   'Your course was deleted successfully!'

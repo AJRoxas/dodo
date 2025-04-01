@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/Button';
-import AddCourseForm from '@/components/courses/AddCourseForm';
+import CourseForm from '@/components/courses/CourseForm';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useDialog } from '@/context/DialogContext';
 
@@ -15,7 +15,7 @@ const AddCourseButton = () => {
       onClick={() => {
         openDialog({
           title: 'Add a Course',
-          content: <AddCourseForm />,
+          content: <CourseForm mode="add" />,
         });
       }}
     >

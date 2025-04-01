@@ -9,6 +9,8 @@ import {
   serverErrorMessage,
   successDeleteCourseMessage,
 } from '@/lib/utils/toastMessages';
+import { useDialog } from '@/context/DialogContext';
+import CourseForm from '@/components/courses/CourseForm';
 
 interface CourseCardProps {
   course: CourseWithStats;
@@ -16,6 +18,7 @@ interface CourseCardProps {
 
 const CourseCard = ({ course }: CourseCardProps) => {
   const router = useRouter();
+  const { openDialog } = useDialog();
   const { openAlert, closeAlert } = useAlert();
   const { showToast } = useToast();
 
@@ -38,6 +41,13 @@ const CourseCard = ({ course }: CourseCardProps) => {
     };
   };
 
+  const dialogCourseEdit = () => {
+    openDialog({
+      title: `Edit ${course.course_code}?`,
+      content: <CourseForm mode="edit" course={course} />,
+    });
+  };
+
   const alertCourseDelete = () => {
     openAlert({
       title: `Delete ${course.course_code}?`,
@@ -56,7 +66,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
       subTwo={`Credits: ${course.weight}`}
       barLabel="Progress"
       barValue={course.progress!}
-      onEdit={() => {}}
+      onEdit={dialogCourseEdit}
       onDelete={alertCourseDelete}
     />
   );

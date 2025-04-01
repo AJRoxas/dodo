@@ -34,10 +34,11 @@ export const createCourse = ({
 };
 
 export const updateCourse = (course: CourseWithTags) => {
+  const id = Number(course.id);
   return prismaTryCatch(async () => {
     await prisma.coursetags.deleteMany({
       where: {
-        course_id: course.id,
+        course_id: id,
       },
     });
 
@@ -47,7 +48,7 @@ export const updateCourse = (course: CourseWithTags) => {
 
     const updatedCourse = await prisma.courses.update({
       where: {
-        id: course.id,
+        id: id,
       },
       data: {
         course_code: course.course_code,
@@ -62,6 +63,7 @@ export const updateCourse = (course: CourseWithTags) => {
         },
       },
     });
+
     return updatedCourse;
   });
 };
