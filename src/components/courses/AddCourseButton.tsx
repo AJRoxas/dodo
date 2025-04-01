@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/Button';
-import AddCourseForm from '@/components/dashboard/AddCourseForm';
+import AddCourseForm from '@/components/courses/AddCourseForm';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useDialog } from '@/context/DialogContext';
 

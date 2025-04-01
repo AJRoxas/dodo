@@ -64,7 +64,7 @@ const GettingStartedForm = () => {
       if (response.ok) {
         showToast(successGettingStartedMessage);
 
-        router.replace('/dashboard');
+        router.replace('/courses');
       } else {
         showToast(serverErrorMessage);
       }

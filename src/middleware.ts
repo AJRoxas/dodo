@@ -12,7 +12,7 @@ import { getUserSetting } from './lib/prisma/queries/userSettings';
 import { cookies } from 'next/headers';
 
 const PUBLIC_PATHS = ['/', '/sign-in'];
-const ONBOARDED_PATHS = ['/dashboard'];
+const ONBOARDED_PATHS = ['/courses'];
 const ONBOARDING_PATHS = ['/getting-started'];
 
 export async function middleware(request: NextRequest) {
@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
       const isOnboarded = cookieStore.get('isOnboarded')?.value;
 
       if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
-        const location = isOnboarded ? '/dashboard' : '/getting-started';
+        const location = isOnboarded ? '/courses' : '/getting-started';
         return redirectToPath(request, location, {
           shouldClearSearchParams: true,
         });
@@ -56,7 +56,7 @@ export async function middleware(request: NextRequest) {
         isOnboarded &&
         ONBOARDING_PATHS.includes(request.nextUrl.pathname)
       ) {
-        return redirectToPath(request, '/dashboard', {
+        return redirectToPath(request, '/courses', {
           shouldClearSearchParams: true,
         });
       }

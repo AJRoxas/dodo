@@ -18,7 +18,7 @@ const SignInSection = () => {
 
   const signIn = async (signInFn: () => Promise<boolean>) => {
     if (await signInFn()) {
-      router.replace('/dashboard');
+      router.replace('/courses');
     }
   };
 

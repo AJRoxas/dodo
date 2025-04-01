@@ -1,6 +1,6 @@
-import AddCourseButton from '@/components/dashboard/AddCourseButton';
-import CourseCard from '@/components/dashboard/CourseCard';
-import DashboardHeading from '@/components/dashboard/DashboardHeading';
+import AddCourseButton from '@/components/courses/AddCourseButton';
+import CourseCard from '@/components/courses/CourseCard';
+import DashboardHeading from '@/components/courses/DashboardHeading';
 import Scrollable from '@/components/Scrollable';
 import AlertProvider from '@/context/AlertContext';
 import DialogProvider from '@/context/DialogContext';
@@ -16,15 +16,15 @@ const DashboardPage = async () => {
   const user = await retrieveDecodedTokens(await cookies());
   if (!user) return notFound();
 
-  const dashboardData = await getCachedUserDashboardData(user.uid);
-  const { cGpa, credits, courses } = dashboardData;
-  const { required_credits, final_gpa_goal } = dashboardData.usersettings;
+  const coursesData = await getCachedUserDashboardData(user.uid);
+  const { cGpa, credits, courses } = coursesData;
+  const { required_credits, final_gpa_goal } = coursesData.usersettings;
 
   const tags = await getCachedTags();
 
   return (
     <main className="flex flex-col md:flex-row justify-between items-center">
-      <div className="container-dashboard bg-primary md:w-px-375 text-light  md:motion-safe:animate-fade-right">
+      <div className="container-courses bg-primary md:w-px-375 text-light  md:motion-safe:animate-fade-right">
         <DashboardHeading
           cGpa={cGpa}
           finalGpaGoal={final_gpa_goal}
@@ -35,7 +35,7 @@ const DashboardPage = async () => {
       <TagProvider tags={tags}>
         <AlertProvider>
           <DialogProvider>
-            <div className="container-dashboard md:items-start">
+            <div className="container-courses md:items-start">
               <div className="flex flex-col lg:flex-row items-start justify-between w-75 md:w-full">
                 <div>
                   <span className="font-semibold text-2xl">Courses | </span>
