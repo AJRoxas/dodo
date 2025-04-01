@@ -4,7 +4,7 @@ import '@/styles/globals.css';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import ToastWrapper from '@/components/ToastWrapper';
+import ToastProvider from '@/context/ToastContext';
 config.autoAddCss = false;
 
 const poppins = Poppins({
@@ -36,11 +36,11 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
-        <ToastWrapper>
+        <ToastProvider>
           <div className="w-full min-h-screen font-poppins bg-light text-dark">
             {children}
           </div>
-        </ToastWrapper>
+        </ToastProvider>
       </body>
     </html>
   );

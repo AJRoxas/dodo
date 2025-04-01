@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
     }
 
     revalidateTag('dashboard');
+    revalidateTag('courses');
     return NextResponse.json(course, { status: 201 });
   });
 }

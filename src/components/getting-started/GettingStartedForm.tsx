@@ -2,15 +2,15 @@
 
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
-import GpaScaleField from '@/components/forms/fields/GpaScaleField';
+import GpaScaleField from '@/components/forms/fieldGroups/GpaScaleField';
 import {
   validateAcademicGoals,
   validateGpaScaleInput,
   validateUserSettings,
 } from '@/lib/utils/validations';
 import { usersettings } from '@prisma/client';
-import AcademicGoalsField from '../forms/fields/AcademicGoalsField';
-import { useToast } from '@/components/ToastWrapper';
+import AcademicGoalsField from '../forms/fieldGroups/AcademicGoalsField';
+import { useToast } from '@/context/ToastContext';
 import { auth } from '@/lib/firebase/firebase';
 import { useRouter } from 'next/navigation';
 import { gpaScaleSort } from '@/lib/utils/gpaScale';
@@ -64,7 +64,7 @@ const GettingStartedForm = () => {
       if (response.ok) {
         showToast(successGettingStartedMessage);
 
-        router.replace('/dashboard');
+        router.replace('/courses');
       } else {
         showToast(serverErrorMessage);
       }

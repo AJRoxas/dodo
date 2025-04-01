@@ -12,6 +12,8 @@ interface CourseAssessmentCardProps {
   subTwo: string;
   barLabel: string;
   barValue: number;
+  onEdit: React.MouseEventHandler;
+  onDelete: React.MouseEventHandler;
 }
 
 const CourseAssessmentCard = ({
@@ -21,6 +23,8 @@ const CourseAssessmentCard = ({
   subTwo,
   barLabel,
   barValue,
+  onEdit,
+  onDelete,
 }: CourseAssessmentCardProps) => {
   const Element = isAssessment ? 'div' : 'a';
 
@@ -29,14 +33,26 @@ const CourseAssessmentCard = ({
       <div>
         <div className="w-full flex items-center justify-between">
           <Element
-            className={`font-semibold text-xl w-36 whitespace-nowrap overflow-hidden text-ellipsis ${isAssessment ? undefined : 'hover:underline'}`}
+            className={`font-semibold text-xl w-36 whitespace-nowrap overflow-hidden text-ellipsis ${
+              isAssessment ? undefined : 'hover:underline'
+            }`}
             href={isAssessment ? undefined : '/'}
           >
             {label}
           </Element>
           <div className="flex gap-1">
-            <Button size="fas" icon={faEdit} ariaLabel={`Edit ${label}`} />
-            <Button size="fas" icon={faTrash} ariaLabel={`Delete ${label}`} />
+            <Button
+              size="fas"
+              icon={faEdit}
+              ariaLabel={`Edit ${label}`}
+              onClick={onEdit}
+            />
+            <Button
+              size="fas"
+              icon={faTrash}
+              ariaLabel={`Delete ${label}`}
+              onClick={onDelete}
+            />
           </div>
         </div>
         <div className="w-full flex items-center justify-between">

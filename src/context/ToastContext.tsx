@@ -33,7 +33,7 @@ type ToastContextType = {
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-const ToastWrapper = ({
+const ToastProvider = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
   const [open, setOpen] = useState(false);
@@ -126,9 +126,9 @@ const ToastWrapper = ({
 export const useToast = () => {
   const context = useContext(ToastContext);
   if (!context) {
-    throw new Error('useToast must be used within a ToastWrapper');
+    throw new Error('useToast must be used within a ToastProvider');
   }
   return context;
 };
 
-export default ToastWrapper;
+export default ToastProvider;
