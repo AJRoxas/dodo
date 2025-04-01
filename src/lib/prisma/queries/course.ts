@@ -70,7 +70,7 @@ export const deleteCourse = (id: number) => {
   return prismaTryCatch(async () => {
     const deletedCourse = await prisma.courses.delete({
       where: {
-        id: id,
+        id: Number(id),
       },
     });
     return deletedCourse;

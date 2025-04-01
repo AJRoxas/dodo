@@ -1,4 +1,4 @@
-import { ShowToastProps } from '@/components/ToastWrapper';
+import { ShowToastProps } from '@/components/wrappers/ToastWrapper';
 
 // When form fails in zod (usually non-malicious)
 export const invalidFormMessage: ShowToastProps = {
@@ -17,31 +17,40 @@ export const unexpectedFormChangeMessage: ShowToastProps = {
 // When something fails on back-end
 export const serverErrorMessage: ShowToastProps = {
   title: 'Server Error',
-  description: 'Your information was not saved, please refresh and try again.',
+  description: 'Please refresh and try again.',
   type: 'error',
 };
 
 // When something fails on back-end because it is not unique
 export const serverErrorUniquenessMessage: (value: string) => ShowToastProps = (
-  extraMessage: string
+  message: string
 ) => {
   return {
     title: 'This record already exists',
-    description: extraMessage,
+    description: message,
     type: 'error',
   };
 };
 
-// When getting started page called fetch successfully
-export const successGettingStartedMessage: ShowToastProps = {
-  title: 'Success',
-  description: 'Your settings have been saved!',
-  type: 'success',
+const successMessage: (value: string) => ShowToastProps = (message: string) => {
+  return {
+    title: 'Success',
+    description: message,
+    type: 'success',
+  };
 };
 
-// When add course form called fetch successfully
-export const successAddCourseMessage: ShowToastProps = {
-  title: 'Success',
-  description: 'Your course was added successfully!',
-  type: 'success',
-};
+// When getting started page called fetch successfully
+export const successGettingStartedMessage: ShowToastProps = successMessage(
+  'Your settings have been saved!'
+);
+
+// When course added successfully
+export const successAddCourseMessage: ShowToastProps = successMessage(
+  'Your course was added successfully!'
+); 
+
+// When course deleted successfully
+export const successDeleteCourseMessage: ShowToastProps = successMessage(
+  'Your course was deleted successfully!'
+);

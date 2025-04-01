@@ -55,9 +55,11 @@ const DialogWrapper = ({
             aria-describedby={description ?? undefined}
           >
             <div className="mb-10">
-              <Dialog.Title className="font-semibold text-2xl">
-                {title}
-              </Dialog.Title>
+              {title && (
+                <Dialog.Title className="font-semibold text-2xl">
+                  {title}
+                </Dialog.Title>
+              )}
 
               {description && (
                 <Dialog.Description className="font-semibold text-sm">
