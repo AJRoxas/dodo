@@ -43,7 +43,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
 
   const dialogCourseEdit = () => {
     openDialog({
-      title: `Edit ${course.course_code}?`,
+      title: `Edit ${course.course_code}`,
       content: <CourseForm mode="edit" course={course} />,
     });
   };

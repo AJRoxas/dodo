@@ -83,7 +83,7 @@ const CourseForm = ({ mode, course }: CourseFormProps) => {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                ...course,
+                ...formCourse,
                 coursetags: [courseTag],
               }),
             });
@@ -113,7 +113,7 @@ const CourseForm = ({ mode, course }: CourseFormProps) => {
       <CourseField course={course} />
       <Form.Submit asChild>
         <Button>
-          {mode == 'edit' ? `Update ${course?.course_code}` : 'Add Course'}
+          {mode == 'edit' ? 'Update' : 'Add Course'}
         </Button>
       </Form.Submit>
     </Form.Root>
