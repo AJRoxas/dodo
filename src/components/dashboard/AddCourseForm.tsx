@@ -2,11 +2,11 @@
 
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
-import { useDialog } from '@/components/wrappers/DialogWrapper';
+import { useDialog } from '@/context/DialogContext';
 import CourseField from '@/components/forms/fields/CourseField';
 import { courses, tags } from '@prisma/client';
 import { auth } from '@/lib/firebase/firebase';
-import { useToast } from '@/components/wrappers/ToastWrapper';
+import { useToast } from '@/context/ToastContext';
 import {
   serverErrorMessage,
   serverErrorUniquenessMessage,

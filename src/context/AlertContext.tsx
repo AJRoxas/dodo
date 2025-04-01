@@ -4,7 +4,7 @@ import { AlertDialog } from 'radix-ui';
 import Button from '@/components/Button';
 import { createContext, useContext, useState } from 'react';
 
-interface AlertWrapperProps {
+interface AlertProviderProps {
   title?: string;
   description?: string;
   cancelLabel?: string;
@@ -12,23 +12,23 @@ interface AlertWrapperProps {
   onAction?: React.MouseEventHandler;
 }
 
-type AlertWrapperContextType = {
+type AlertProviderContextType = {
   openAlert: ({
     title,
     description,
     cancelLabel,
     actionLabel,
     onAction,
-  }: AlertWrapperProps) => void;
+  }: AlertProviderProps) => void;
 
   closeAlert: () => void;
 };
 
-const AlertWrapperContext = createContext<AlertWrapperContextType | undefined>(
+const AlertProviderContext = createContext<AlertProviderContextType | undefined>(
   undefined
 );
 
-const AlertWrapper = ({
+const AlertProvider = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
   const [open, setOpen] = useState(false);
@@ -46,7 +46,7 @@ const AlertWrapper = ({
     cancelLabel,
     actionLabel,
     onAction,
-  }: AlertWrapperProps) => {
+  }: AlertProviderProps) => {
     setTitle(title);
     setDescription(description);
     setCancelLabel(cancelLabel);
@@ -65,7 +65,7 @@ const AlertWrapper = ({
   };
 
   return (
-    <AlertWrapperContext.Provider
+    <AlertProviderContext.Provider
       value={{ openAlert: openAlert, closeAlert: closeAlert }}
     >
       {children}
@@ -100,16 +100,16 @@ const AlertWrapper = ({
           </AlertDialog.Content>
         </AlertDialog.Portal>
       </AlertDialog.Root>
-    </AlertWrapperContext.Provider>
+    </AlertProviderContext.Provider>
   );
 };
 
 export const useAlert = () => {
-  const context = useContext(AlertWrapperContext);
+  const context = useContext(AlertProviderContext);
   if (!context) {
-    throw new Error('useAlertWrapper must be used within a AlertWrapper');
+    throw new Error('useAlertProvider must be used within a AlertProvider');
   }
   return context;
 };
 
-export default AlertWrapper;
+export default AlertProvider;

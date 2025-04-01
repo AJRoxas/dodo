@@ -2,8 +2,8 @@
 
 import CourseAssessmentCard from '@/components/CourseAssessmentCard';
 import { CourseWithStats } from '@@/types';
-import { useAlert } from '@/components/wrappers/AlertWrapper';
-import { useToast } from '@/components/wrappers/ToastWrapper';
+import { useAlert } from '@/context/AlertContext';
+import { useToast } from '@/context/ToastContext';
 import { useRouter } from 'next/navigation';
 import {
   serverErrorMessage,

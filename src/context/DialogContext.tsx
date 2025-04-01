@@ -5,22 +5,22 @@ import Button from '@/components/Button';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-interface DialogWrapperProps {
+interface DialogProviderProps {
   title?: string;
   description?: string;
   content: ReactNode;
 }
 
-type DialogWrapperContextType = {
-  openDialog: ({ title, description, content }: DialogWrapperProps) => void;
+type DialogProviderContextType = {
+  openDialog: ({ title, description, content }: DialogProviderProps) => void;
   closeDialog: () => void;
 };
 
-const DialogWrapperContext = createContext<
-  DialogWrapperContextType | undefined
+const DialogProviderContext = createContext<
+  DialogProviderContextType | undefined
 >(undefined);
 
-const DialogWrapper = ({
+const DialogProvider = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
   const [open, setOpen] = useState(false);
@@ -28,7 +28,7 @@ const DialogWrapper = ({
   const [description, setDescription] = useState<string | undefined>();
   const [content, setContent] = useState<ReactNode>(<div></div>);
 
-  const openDialog = ({ title, description, content }: DialogWrapperProps) => {
+  const openDialog = ({ title, description, content }: DialogProviderProps) => {
     setTitle(title);
     setDescription(description);
     setContent(content);
@@ -43,7 +43,7 @@ const DialogWrapper = ({
   };
 
   return (
-    <DialogWrapperContext.Provider
+    <DialogProviderContext.Provider
       value={{ openDialog: openDialog, closeDialog: closeDialog }}
     >
       {children}
@@ -79,16 +79,16 @@ const DialogWrapper = ({
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-    </DialogWrapperContext.Provider>
+    </DialogProviderContext.Provider>
   );
 };
 
 export const useDialog = () => {
-  const context = useContext(DialogWrapperContext);
+  const context = useContext(DialogProviderContext);
   if (!context) {
-    throw new Error('useDialogWrapper must be used within a DialogWrapper');
+    throw new Error('useDialogProvider must be used within a DialogProvider');
   }
   return context;
 };
 
-export default DialogWrapper;
+export default DialogProvider;

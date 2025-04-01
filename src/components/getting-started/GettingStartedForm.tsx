@@ -10,7 +10,7 @@ import {
 } from '@/lib/utils/validations';
 import { usersettings } from '@prisma/client';
 import AcademicGoalsField from '../forms/fields/AcademicGoalsField';
-import { useToast } from '@/components/wrappers/ToastWrapper';
+import { useToast } from '@/context/ToastContext';
 import { auth } from '@/lib/firebase/firebase';
 import { useRouter } from 'next/navigation';
 import { gpaScaleSort } from '@/lib/utils/gpaScale';

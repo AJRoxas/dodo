@@ -1,4 +1,4 @@
-import { ShowToastProps } from '@/components/wrappers/ToastWrapper';
+import { ShowToastProps } from '@/context/ToastContext';
 
 // When form fails in zod (usually non-malicious)
 export const invalidFormMessage: ShowToastProps = {
