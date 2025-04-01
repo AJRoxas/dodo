@@ -2,6 +2,9 @@ import AddCourseButton from '@/components/dashboard/AddCourseButton';
 import CourseCard from '@/components/dashboard/CourseCard';
 import DashboardHeading from '@/components/dashboard/DashboardHeading';
 import Scrollable from '@/components/Scrollable';
+import AlertProvider from '@/context/AlertContext';
+import DialogProvider from '@/context/DialogContext';
+import TagProvider from '@/context/TagContext';
 import { retrieveDecodedTokens } from '@/lib/auth/token';
 import { getCachedTags } from '@/lib/prisma/queries/tags';
 import { getCachedUserDashboardData } from '@/lib/prisma/queries/users';
@@ -29,24 +32,31 @@ const DashboardPage = async () => {
           requiredCredits={required_credits}
         />
       </div>
-      <div className="container-dashboard md:items-start">
-        <div className="flex flex-col lg:flex-row items-start justify-between w-75 md:w-full">
-          <div>
-            <span className="font-semibold text-2xl">Courses | </span>
-            <span className="font-semibold text-sm">
-              Credits: {credits.toFixed(2)} of {required_credits.toFixed(2)}
-            </span>
-          </div>
-          <AddCourseButton tags={tags} />
-        </div>
-        <Scrollable>
-          <div className="flex gap-4 flex-wrap justify-center md:justify-start content-start p-0 md:p-1 motion-safe:animate-fade-up">
-            {courses.map((course: CourseWithStats) => {
-              return <CourseCard key={course.id} course={course} />;
-            })}
-          </div>
-        </Scrollable>
-      </div>
+      <TagProvider tags={tags}>
+        <AlertProvider>
+          <DialogProvider>
+            <div className="container-dashboard md:items-start">
+              <div className="flex flex-col lg:flex-row items-start justify-between w-75 md:w-full">
+                <div>
+                  <span className="font-semibold text-2xl">Courses | </span>
+                  <span className="font-semibold text-sm">
+                    Credits: {credits.toFixed(2)} of{' '}
+                    {required_credits.toFixed(2)}
+                  </span>
+                </div>
+                <AddCourseButton/>
+              </div>
+              <Scrollable>
+                <div className="flex gap-4 flex-wrap justify-center md:justify-start content-start p-0 md:p-1 motion-safe:animate-fade-up">
+                  {courses.map((course: CourseWithStats) => {
+                    return <CourseCard key={course.id} course={course} />;
+                  })}
+                </div>
+              </Scrollable>
+            </div>
+          </DialogProvider>
+        </AlertProvider>
+      </TagProvider>
     </main>
   );
 };

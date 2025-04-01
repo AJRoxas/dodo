@@ -1,20 +1,21 @@
 import FormSwitch from '@/components/forms/FormSwitch';
 import { FormInput } from '../FormInput';
 import FormSelect from '../FormSelect';
-import { courses, tags } from '@prisma/client';
-import { CourseWithStats } from '@@/types';
+import { courses } from '@prisma/client';
+import {
+  CourseWithAssessments,
+  CourseWithStats,
+  CourseWithTags,
+} from '@@/types';
+import { useTags } from '@/context/TagContext';
 
 interface CourseFieldProps {
-  tags: tags[];
-  selectPlaceholder?: string;
-  course?: courses | CourseWithStats;
+  course?: courses | CourseWithTags | CourseWithAssessments | CourseWithStats;
 }
 
-const CourseField = ({
-  tags,
-  selectPlaceholder,
-  course,
-}: Readonly<CourseFieldProps>) => {
+const CourseField = ({ course }: Readonly<CourseFieldProps>) => {
+  const tags = useTags();
+
   return (
     <div className="flex justify-between gap-5 flex-wrap mb-10">
       <FormInput
@@ -51,7 +52,7 @@ const CourseField = ({
         label="Is a pass/fail course?"
         isChecked={course?.is_pass_fail}
       />
-      <FormSelect name='tag' options={tags} placeholder={selectPlaceholder} />
+      <FormSelect name="tag" options={tags} placeholder={'Choose a semester'} />
       <FormInput
         name="year"
         label="Starting Year"

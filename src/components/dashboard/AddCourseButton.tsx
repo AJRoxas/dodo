@@ -3,10 +3,9 @@
 import Button from '@/components/Button';
 import AddCourseForm from '@/components/dashboard/AddCourseForm';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { tags } from '@prisma/client';
 import { useDialog } from '@/context/DialogContext';
 
-const AddCourseButton = ({tags}: {tags: tags[]}) => {
+const AddCourseButton = () => {
   const { openDialog } = useDialog();
   return (
     <Button
@@ -16,7 +15,7 @@ const AddCourseButton = ({tags}: {tags: tags[]}) => {
       onClick={() => {
         openDialog({
           title: 'Add a Course',
-          content: <AddCourseForm tags={tags} />,
+          content: <AddCourseForm />,
         });
       }}
     >

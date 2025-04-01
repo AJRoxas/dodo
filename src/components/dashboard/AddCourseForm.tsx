@@ -3,8 +3,8 @@
 import { Form } from 'radix-ui';
 import Button from '@/components/Button';
 import { useDialog } from '@/context/DialogContext';
-import CourseField from '@/components/forms/fields/CourseField';
-import { courses, tags } from '@prisma/client';
+import CourseField from '@/components/forms/fieldGroups/CourseField';
+import { courses } from '@prisma/client';
 import { auth } from '@/lib/firebase/firebase';
 import { useToast } from '@/context/ToastContext';
 import {
@@ -15,15 +15,15 @@ import {
 } from '@/lib/utils/toastMessages';
 import { validateCourse } from '@/lib/utils/validations';
 import { useRouter } from 'next/navigation';
+import { useTags } from '@/context/TagContext';
 
-interface AddCourseFormProps {
-  tags: tags[];
-}
-
-const AddCourseForm = ({ tags }: Readonly<AddCourseFormProps>) => {
+const AddCourseForm = () => {
   const router = useRouter();
+  const tags = useTags();
+
   const { closeDialog } = useDialog();
   const { showToast } = useToast();
+
   const submitTest = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -74,7 +74,7 @@ const AddCourseForm = ({ tags }: Readonly<AddCourseFormProps>) => {
             serverErrorUniquenessMessage('Course code must be unique!')
           );
         } else {
-          console.log(error)
+          console.log(error);
           showToast(serverErrorMessage);
         }
       }
@@ -84,7 +84,7 @@ const AddCourseForm = ({ tags }: Readonly<AddCourseFormProps>) => {
   };
   return (
     <Form.Root onSubmit={submitTest} id="test">
-      <CourseField tags={tags} selectPlaceholder="Choose a semester" />
+      <CourseField />
       <Form.Submit asChild>
         <Button>Add Course</Button>
       </Form.Submit>
