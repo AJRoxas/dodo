@@ -8,17 +8,14 @@ neonConfig.webSocketConstructor = ws;
 // To work in edge environments (Cloudflare Workers, Vercel Edge, etc.), enable querying over fetch
 neonConfig.poolQueryViaFetch = true;
 
-// Type definitions
-declare global {
-   var prisma: PrismaClient | undefined;
-}
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 
 const connectionString = `${process.env.DATABASE_URL}`;
 
 const pool = new Pool({ connectionString });
 const adapter = new PrismaNeon(pool);
-const prisma = global.prisma || new PrismaClient({ adapter });
+const prisma =  globalForPrisma.prisma || new PrismaClient({ adapter });
 
-if (process.env.APP_ENV === 'dev') global.prisma = prisma;
+if (process.env.APP_ENV === 'dev') globalForPrisma.prisma = prisma;
 
 export default prisma;

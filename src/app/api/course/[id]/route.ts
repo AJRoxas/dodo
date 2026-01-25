@@ -7,7 +7,7 @@ import { coursetags } from '@prisma/client';
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ id: number }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return await apiTryCatch(async () => {
     const unAuthenticated = await validateToken(request.cookies);
@@ -16,7 +16,7 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json();
     const course = await updateCourse({
-      id: id,
+      id: Number(id),
       user_id: body.user_id,
       course_code: body.course_code,
       weight: body.weight,
@@ -41,14 +41,14 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: number }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return await apiTryCatch(async () => {
     const unAuthenticated = await validateToken(request.cookies);
     if (unAuthenticated) return unAuthenticated;
 
     const { id } = await params;
-    const course = await deleteCourse(id);
+    const course = await deleteCourse(Number(id));
 
     if (course.error !== undefined) {
       return NextResponse.json(course, { status: 400 });
